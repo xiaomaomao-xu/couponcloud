@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App'
 
 Vue.config.productionTip = false
-Vue.prototype.http = 'http://127.0.0.1:8088';  
+Vue.prototype.http = 'http://cim.kaifanzhe.club/coupon';  
 
 
 App.mpType = 'app'
