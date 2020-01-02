@@ -14,7 +14,7 @@
 				<image v-if="https" :src="https+'/front_image/icon2.png'"></image>
 			</view>
 			<view class="title_scanning" @tap="RQcode">
-				<image v-if="https" :src="https+'/front_image/icon3.png'"></image><text>扫一扫</text>
+				<image v-if="https" :src="https+'/front_image/icon3.png'"></image><text>扫一扫</text> 
 			</view>
 		</view>
 		<view class="membership">
