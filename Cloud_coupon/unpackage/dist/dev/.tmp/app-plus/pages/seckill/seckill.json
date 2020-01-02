@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "限时秒杀",
+  "titleNView": false,
+  "usingComponents": {
+    "madjob": "/components/madjob/madjob",
+    "soon": "/components/soon/soon",
+    "notice": "/components/notice/notice"
+  }
+}

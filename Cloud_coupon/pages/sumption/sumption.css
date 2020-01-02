@@ -1,0 +1,8 @@
+.follow_box{width: 100%;height: auto;overflow: hidden;}
+.post_titile{width: 90%;margin: 0 5%;height: auto;overflow: hidden;border-bottom: 1px solid #EAEAEA;}
+.post_new{width: 100%;height: auto;overflow: hidden;}
+.new_le{width: 70%;float: left;padding: 20rpx 0;box-sizing: border-box;}
+.new_le view{width: 100%;float: left;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;}
+.new_le view:nth-of-type(1){font-size: 0.9rem;font-weight: bold;margin-bottom: 20rpx;}
+.new_le view:nth-of-type(2){font-size: 0.7rem;color: #666666;}
+.new_ri{font-size: 0.9rem;font-weight: bold;padding: 20rpx;box-sizing: border-box;float: right;margin: 28rpx 0;}

@@ -1,0 +1,38 @@
+<template>
+	<view style="position: absolute;top: 0;bottom: 0;width: 100%;left: 0;background: #F0F0F0;height: auto;overflow: hidden;">
+		<view class="recharge_box">
+			<view class="box_llist">
+				<view class="recharge_al">
+					<text>充值方式</text>
+					<text>钱包</text>
+				</view>
+				<view class="recharge_bl">充值金额</view>
+				<view class="recharge_cl">
+					<text>￥</text>
+					<input type="digit" focus="true" adjust-position="true">
+				</view>
+				<view class="recharge_el">
+					<text>当前钱包余额为10000.00元,</text><text>全部体现</text>
+				</view>
+				<view class="recharge_ql">充值</view>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				
+			}
+		},
+		methods: {
+			
+		}
+	}
+</script>
+
+<style>
+	@import url("recharge.css");
+</style>

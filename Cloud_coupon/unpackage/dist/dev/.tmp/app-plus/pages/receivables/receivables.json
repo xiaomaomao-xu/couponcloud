@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "收款码",
+  "titleNView": false,
+  "usingComponents": {
+    "tki-qrcode": "/components/tki-qrcode/tki-qrcode"
+  }
+}

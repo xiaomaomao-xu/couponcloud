@@ -1,0 +1,46 @@
+.dining_title{width: 100%;height: auto;overflow: hidden;}
+.dining_pic{width: 30%;float: left;height: 300rpx;position: absolute;top: 0;left: 0;z-index: 999;box-shadow: 0 0 10rpx #EAEAEA;}
+.dining_pic image{width: 100%;height: 100%;}
+.dining_text{width: 90%;left: 5%;top: 40rpx;background: white;position: absolute;height: 300rpx;border-radius: 10rpx;padding: 30rpx 0 30rpx 30%;box-sizing: border-box;}
+.dining_text>view{margin-bottom: 20rpx;}
+.text_one{font-size: 0.9rem;font-weight: bold;}
+.text_two{color: #666666;font-size: 0.7rem;}
+.text_three text{font-size: 0.8rem;}
+.text_three text:nth-of-type(1){background: red;color: white;padding: 5rpx 10rpx;box-sizing: border-box;margin-right: 20rpx;border-radius: 10rpx;}
+.text_four{width: 100%;height: 50rpx;overflow: hidden;display: flex;justify-content: left;box-sizing: border-box;}
+.text_four>view{width: auto;font-size: 0.8rem;height: 100%;overflow: hidden;line-height: 50rpx;}
+.text_four>view text{background: #000000;color: white;border-radius: 10rpx;display: block;float: left;padding: 0 10rpx;margin: 0 10rpx;height: 100%;line-height: 50rpx;font-size: 0.6rem;}
+.text_four>view view{float: left;width: auto;height: 100%;}
+.dining_ment{width: 100%;position: fixed;bottom: 0;height: 120rpx;font-size: 0.8rem;line-height: 120rpx;background:white;}
+.dining_ment view:nth-of-type(1){padding: 0 40rpx;box-sizing: border-box;width: 70%;float: left;color:red;font-weight:bold;font-size: 0.9rem;}
+.dining_ment view:nth-of-type(2){text-align: center;float: right;width: 30%;float: right;background: #ee7d42;color: white;}
+.dining_rule{width:90%;margin: 0 5%;background: white;border-radius: 10rpx;height: auto;overflow: hidden;padding: 20rpx;box-sizing: border-box;}
+.dining_rule view:nth-of-type(1){font-size: 0.9rem;font-weight: bold;margin-bottom: 20rpx;}
+.dining_rule view:nth-of-type(2){font-size: 0.7rem;color: #666666;word-wrap: break-word;word-break: normal;}
+
+.auth_data{width: 90%;margin: 0 5% 20rpx 5%;background: white;border-radius: 10rpx;font-size: 0.8rem;height: auto;overflow: hidden;padding: 0 20rpx;box-sizing: border-box;margin-top: 380rpx;}
+.benner_title{width: 100%;height: auto;font-size: 0.8rem;padding: 40rpx 2.5%;box-sizing: border-box;overflow: hidden;background: white;border-bottom: 1px solid #EAEAEA;}
+.benner_title view:nth-of-type(1){float: left;}
+.benner_title view:nth-of-type(2){float: right;}
+.benner_title image{width: 35rpx;height: 35rpx;margin: -3rpx 5rpx ;}
+swiper swiper-item>view{width: 100%;height: auto;overflow: hidden;padding: 40rpx 0;box-sizing: border-box;}
+swiper swiper-item>view:nth-of-type(1){border-bottom: 1px solid #EAEAEA;}
+swiper image{width: 100rpx;height: 100rpx;float: left;border-radius: 50%;}
+swiper view>view:nth-of-type(1){float: left;margin-left: 20rpx;}
+swiper view>view:nth-of-type(1) text{line-height: 50rpx;display: block;}
+swiper view>view:nth-of-type(2){float: right;}
+swiper view>view:nth-of-type(2) text{padding: 10rpx 20rpx;background: red;background: red;color: white;border-radius: 10rpx;line-height:100rpx}
+
+.popup{width: 100%;position: fixed;top: 0;bottom: 0;left: 0;background: rgba(0,0,0,0.7);z-index: 999;}
+.time_list{background: white;width: 80%;height: auto;overflow: hidden;left: 50%;top: 50%;border-radius: 10rpx;transform: translate(-50%,-50%);position: absolute;}
+.time_title{font-size: 0.9rem;font-weight: bold;text-align: center;width: 100%;height: 100rpx;line-height: 100rpx;border-bottom: 1px solid #EAEAEA;}
+.time_list>image{width: 50rpx;height: 50rpx;position: absolute;top: 20rpx;right: 20rpx;}
+.list_otrl{width: 100%;height: 800rpx;overflow: scroll;font-size: 0.8rem;padding: 0 40rpx;box-sizing: border-box;}
+.list_otrl>view{width: 100%;height:auto;overflow: hidden;padding: 40rpx 0;box-sizing: border-box;}
+.list_otrl>view{border-bottom: 1px solid #EAEAEA;}
+.list_otrl>view:first-child{border-bottom: none;}
+.list_otrl image{width: 100rpx;height: 100rpx;float: left;border-radius: 50%;}
+.list_otrl view>view:nth-of-type(1){float: left;margin-left: 20rpx;}
+.list_otrl view>view:nth-of-type(1) text{line-height: 50rpx;display: block;}
+.list_otrl view>view:nth-of-type(2){float: right;}
+.list_otrl view>view:nth-of-type(2) text{padding: 10rpx 20rpx;background: red;background: red;color: white;border-radius: 10rpx;line-height:100rpx}

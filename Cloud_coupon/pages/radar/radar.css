@@ -1,0 +1,9 @@
+.map_box{width: 100%;height: 100%;overflow: hidden;}
+.search{width: 90%;height: 100rpx;border-radius: 10rpx;background: white;z-index: 99;position: absolute;top: 40rpx;left: 5%;}
+.chant_lilst{position: absolute;top: 90%;width: 100%;height: auto;font-size: 0.8rem;background: white;border-top: 1px solid #EAEAEA;overflow: hidden;z-index: 999;}
+.search input{width: 80%;height: 60rpx;line-height: 60rpx;padding: 0 20rpx;box-sizing: border-box;font-size: 0.8rem;margin: 20rpx 0;float: left;}
+.search view{width: 20%;float: right;height: 60rpx;line-height: 60rpx;text-align: center;margin: 20rpx 0;border-left:1px solid #EAEAEA;box-sizing: border-box;font-size: 0.8rem;color: #666666;} 
+.chant_title{height: 100rpx;text-align: center;line-height: 100rpx;width: 100%;}
+.chant_center{height: auto;width: 100%;overflow: hidden;}
+.center_el{width: 100%;height: 100rpx;border-top: 1px solid #EAEAEA;}
+.box_view{position: absolute;top: 0;bottom: 0;width: 100%;}

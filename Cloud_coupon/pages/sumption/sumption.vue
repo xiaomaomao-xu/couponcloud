@@ -1,0 +1,50 @@
+<template>
+	<view style="position: absolute;top: 0;left: 0;width: 100%;bottom: 0;background: white;overflow: scroll;">
+		<view class="follow_box">
+			<view class="post_titile">
+				<view class="post_new">
+					<view class="new_le">
+						<view>扫二维码付款给四进行操作细节成就偶爱圣诞快乐规范和你</view>
+						<view>12月7日08:23</view>
+					</view>
+					<view class="new_ri">-12.00</view>
+				</view>
+			</view>
+			<view class="post_titile">
+				<view class="post_new">
+					<view class="new_le">
+						<view>扫二维码付款给四进行操作细节成就偶爱圣诞快乐规范和你</view>
+						<view>12月7日08:23</view>
+					</view>
+					<view class="new_ri">-12.00</view>
+				</view>
+			</view>
+			<view class="post_titile">
+				<view class="post_new">
+					<view class="new_le">
+						<view>扫二维码付款给四进行操作细节成就偶爱圣诞快乐规范和你</view>
+						<view>12月7日08:23</view>
+					</view>
+					<view class="new_ri">-12.00</view>
+				</view>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				
+			}
+		},
+		methods: {
+			
+		}
+	}
+</script>
+
+<style>
+	@import url("sumption.css");
+</style>

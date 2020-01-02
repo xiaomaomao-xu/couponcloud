@@ -1,0 +1,82 @@
+<template name="notice">
+	<view>
+		<view class="soon_swiper">
+			<view class="uni-padding-wrap">
+				<view class="page-section swiper">
+					<view class="page-section-spacing">
+						<swiper class="swiper" :autoplay="autoplay" :interval="interval" :duration="duration" display-multiple-items="5" circular="true">
+							<swiper-item class="item_el">
+								<view class="swiper-item">
+									<text>11.01</text></view>
+							</swiper-item>
+							<swiper-item class="item_el">
+								<view class="swiper-item">
+									<text>11.02</text></view>
+							</swiper-item>
+							<swiper-item class="item_el">
+								<view class="swiper-item">
+									<text>11.03</text></view>
+							</swiper-item>
+							<swiper-item class="item_el">
+								<view class="swiper-item">
+									<text>11.04</text></view>
+							</swiper-item>
+							<swiper-item class="item_el">
+								<view class="swiper-item">
+									<text>11.05</text></view>
+							</swiper-item>
+							<swiper-item class="item_el">
+								<view class="swiper-item">
+									<text>11.06</text></view>
+							</swiper-item>
+							<swiper-item class="item_el">
+								<view class="swiper-item">
+									<text>11.07</text></view>
+							</swiper-item>
+						</swiper>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="mad_center">
+			<view class="mad_left"><image src="../../static/images/logo.png"></image></view>
+			<view class="mad_right">
+				<view class="mad_list">阿三大苏打撒旦撒撒打算</view>
+				<view class="mad_speed">
+					<view>满减券</view>
+					<view>5/10张</view>
+				</view>
+				<view class="mad_btn">
+					<view>马上抢</view>
+				</view>
+			</view>
+		</view>
+	</view>
+</template>
+<script>
+	export default {
+		name: "notice",
+		data() {
+			return {
+				autoplay: true,
+				interval: 2000,
+				duration: 500
+			}
+		},
+		methods: {
+        changeAutoplay(e) {
+            this.autoplay = !this.autoplay
+        },
+        intervalChange(e) {
+            this.interval = e.target.value
+        },
+        durationChange(e) {
+            this.duration = e.target.value
+        }
+		}
+
+	}
+</script>
+<style>
+	@import url("notice.css");
+</style>

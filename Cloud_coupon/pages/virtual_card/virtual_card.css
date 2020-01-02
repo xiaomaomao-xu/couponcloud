@@ -1,0 +1,16 @@
+.virt_pic{width: 100%;height: 400rpx;}
+.virt_pic image{width: 100%;height: 100%;}
+.details{width: 100%;height: auto;overflow: hidden;background: white;padding: 20rpx 5%;box-sizing: border-box;}
+.deta_title{font-size: 0.9rem !important;font-weight: bold;}
+.details>view{width: 100%;font-size: 0.7rem;}
+.details>view:nth-of-type(2){padding: 20rpx 0;box-sizing: border-box;}
+.distance text:nth-of-type(2){padding: 0 10rpx;box-sizing: border-box;margin-left: 10rpx;border-left: 1px solid #EAEAEA;}
+.virt_list{width: 100%;height: auto;overflow: hidden;padding: 40rpx 5%;box-sizing: border-box;margin-top: 40rpx;background: white;}
+.virt_card{width: 100%;height: auto;overflow: hidden;border-radius: 30rpx;background: red;margin-bottom: 20rpx;}
+.virt_le{width: 80%;height: auto;overflow: hidden;float: left;padding: 20rpx 40rpx;box-sizing: border-box;}
+.virt_le view{width: 100%;height: auto;overflow: hidden;font-size: 0.7rem;color: white;}
+.virt_le view:nth-of-type(1) text{display: block;width: auto;float: left;}
+.virt_le view:nth-of-type(1) text:nth-of-type(2){float: right;} 
+.virt_ri{width: 20%;height: auto;overflow: hidden;float: left;margin: 40rpx 0;border-left: 1px dashed white;box-sizing: border-box;}
+.virt_le view:nth-of-type(2){font-size: 1rem;margin: 40rpx 0;text-align: center;font-weight: bold;background: rgba(225,225,225,0.3);}
+.virt_ri text{writing-mode: vertical-rl;font-size: 1.2rem;color: white;text-align: center;display: block;margin: 0 auto;}

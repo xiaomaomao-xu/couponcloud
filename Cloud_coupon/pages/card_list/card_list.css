@@ -1,0 +1,12 @@
+.search{width: 90%;height: 100rpx;border-radius: 10rpx;background: white;z-index: 99;position: absolute;top: 40rpx;left: 5%;}
+.search input{width: 80%;height: 60rpx;line-height: 60rpx;padding: 0 20rpx;box-sizing: border-box;font-size: 0.8rem;margin: 20rpx 0;float: left;}
+.search view{width: 20%;float: right;height: 60rpx;line-height: 60rpx;text-align: center;margin: 20rpx 0;border-left:1px solid #EAEAEA;box-sizing: border-box;font-size: 0.8rem;color: #666666;} 
+.box_view{position: absolute;top: 0;bottom: 0;width: 100%;}
+.center_el{width: 100%;overflow: scroll;position: absolute;top: 200rpx;left: 0;bottom: 0;background: white;z-index: 999;padding: 0 5%;box-sizing: border-box;}
+.center_le{width: 80%;float: left;height: auto;overflow: hidden;}
+.left_el{width: 100%;font-size: 0.9rem;font-weight: bold;padding-bottom: 20rpx;box-sizing: border-box;}
+.left_list{width: 100%;font-size: 0.7rem;height: auto;overflow: hidden;}
+.left_list view{margin-right: 20rpx;width: auto;float: left;}
+.center_ri{width: 20%;float: left;height: auto;overflow: hidden;}
+.center_ri image{width: 100rpx;height: 100rpx;}
+.el_list{width: 100%;height: auto;overflow: hidden;border-bottom: 1rpx solid #EAEAEA;padding: 20rpx 0;box-sizing: border-box;}

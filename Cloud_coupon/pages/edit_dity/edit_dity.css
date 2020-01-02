@@ -1,0 +1,14 @@
+.details{width: 100%;height: auto;overflow: scroll;background: #F0F0F0;padding: 0 5% 120rpx 5%;box-sizing: border-box;background: #F0F0F0;}
+.details_data{width: 100%;height: auto;overflow: hidden;}
+.datails_list{width: 100%;height: 100rpx;line-height: 100rpx;border-bottom: 1px solid #EAEAEA;padding: 0 30rpx;box-sizing: border-box;margin-top: 20rpx;background: white;border-radius: 10rpx;}
+.datails_list view{width: 30%;font-size: 0.8rem;color: #000000;height: 100%;float: left;}
+.datails_list input{width: 70%;height: 100%;font-size: 0.8rem;color: #000000;float: left;}
+input::-webkit-input-placeholder{color: #606060;}
+.datails_pic{width: 100%;height: auto;overflow: hidden;background: white;margin: 20rpx 0;padding: 30rpx;box-sizing: border-box;border-radius: 10rpx;}
+.pic_title{font-size: 0.8rem;width: 100%;margin-bottom: 20rpx;}
+.datails_sub{width: 160rpx;height: 160rpx;margin: 20rpx;float: left;}
+.datails_sub image{width: 100%;height: 100%;}
+.btn_submit{width: 100%;height: 120rpx;overflow: hidden;position: fixed;bottom: 0;left: 0;background: white;border-top: 1rpx solid #EAEAEA;}
+.btn_submit view{width: 45%;margin: 20rpx 0 20rpx 3.3%;height: 80rpx;border-radius: 10rpx;text-align: center;line-height: 80rpx;}
+.btn_submit view:nth-of-type(1){border: 1px solid #000000;background: white;color: #000000;float: left;}
+.btn_submit view:nth-of-type(2){background: #f49222;color: white;float: left;}

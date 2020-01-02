@@ -1,0 +1,16 @@
+.center{width: 100%;background: #f0f0f0;height: auto;overflow: scroll;}
+.edit_pic{width: 100%;height: 350rpx;position: absolute;background: white;}
+.pic_el{position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%);width: auto;height: auto;}
+.pic_el image{width: 150rpx;height: 150rpx;border-radius: 50%;position: absolute;left: 50%;transform: translateX(-50%);}
+.pic_el view{font-size: 0.8rem;margin-top: 160rpx;}
+.edit_form{width: 100%;height: auto;overflow: hidden;margin-top: 370rpx;background: white;}
+.form_el{width: 90%;height: 100rpx;border-bottom: 1px solid #EAEAEA;margin: 0 5%;line-height: 100rpx;font-size: 0.8rem;}
+.form_el text{float: left;font-weight: bold;padding: 0 40rpx 0 0;box-sizing: border-box;}
+.form_el input{width: 70%;float: left;height: 100%;}
+.form_el picker{width: 70%;float: left;height: 100%;}
+.autograph{width: 100%;height: auto;overflow: hidden;margin-top: 20rpx;background: white;padding: 0 5%;box-sizing: border-box;}
+.autograph view{font-size: 0.8rem;font-weight: bold;padding: 20rpx 0;}
+.autograph textarea{width: 100%;background: #f0f0f0;height: 300rpx;padding: 30rpx;box-sizing: border-box;font-size: 0.8rem;}
+.sure{width: 100%;background: white;height: auto;overflow: hidden;padding: 40rpx 0;box-sizing: border-box;}
+.sure view{width: 30%;font-size: 0.8rem;font-weight: bold;color: white;background: red;border-radius: 10rpx;margin-left: 35%;text-align: center;padding: 20rpx 0;}
+

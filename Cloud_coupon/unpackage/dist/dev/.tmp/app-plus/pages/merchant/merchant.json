@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "商家详情",
+  "titleNView": false,
+  "usingComponents": {
+    "post-box": "/components/dities/details",
+    "coupon-box": "/components/coupon/coupon",
+    "evaluate": "/components/evaluate/evaluate"
+  }
+}

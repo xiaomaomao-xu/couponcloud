@@ -1,0 +1,10 @@
+.code_box{width: 95%;height: auto;overflow: hidden;margin: 20rpx 2.5%;background: white;}
+.code_title{font-size: 0.8rem;width: 100%;text-align: center;padding-top: 40rpx;box-sizing: border-box;}
+.code_pic{width: 100%;height: auto;overflow: hidden;}
+.code_pic image{width: 400rpx;height: 400rpx;margin: 40rpx auto;display: block;}
+.record{width: 90%;height: auto;overflow: hidden;margin: 0 5%;border-top: 1px solid #EAEAEA;font-size: 0.8rem;padding: 30rpx 0;box-sizing: border-box;}
+.record image{width: 30rpx;height: 30rpx;}
+.record image:nth-of-type(2){float: right;}
+.record text{margin-left: 20rpx;}
+.code_image{width: 100%;height: auto;font-size: 0.8rem;color: #eb6100;text-align: center;padding-bottom: 20rpx;}
+

@@ -1,0 +1,17 @@
+.commodity_el{height: auto;width: 100%;overflow: hidden;background: white;margin-bottom: 20rpx;}
+
+.business{width: 100%;padding: 40rpx 2.5%;box-sizing: border-box;height: auto;overflow: hidden;}
+.business>image{width: 100rpx;height: 100rpx;border-radius: 50%;float: left;margin-top: 20rpx;}
+.business view{width:80%;height: auto;overflow: hidden;padding: 0 10rpx;box-sizing: border-box;margin: 5rpx 0;float: right;}
+.business view text{font-size: 0.6rem;color: #666666;float: left;}
+.business view:nth-of-type(1) text:nth-of-type(1){font-size: 0.9rem;font-weight: bold;color: #000000;}
+.business view:nth-of-type(1) text:nth-of-type(2){float: right;}
+.business view image{width: 20rpx;height: 20rpx;float: left;margin-right: 5rpx;margin-top: 10rpx;}
+.business view:nth-of-type(2) text:nth-of-type(1){margin-left: 10rpx;}
+.eval_pic{float: left;font-size: 0.6rem;color: #666666;margin-right: 10rpx;}
+.business view:nth-of-type(4){font-size: 0.8rem;font-weight: bold;}
+.eval_title{width: 100%;background: white;padding: 20rpx 5%;box-sizing: border-box;font-size: 0.9rem;font-weight: bold;border-bottom: 1px solid #EAEAEA;}
+.eval_bus{background: #F0F0F0;padding: 20rpx !important;}
+.eval_bus image:nth-of-type(1){width: 80rpx;height: 80rpx;float: left;}
+.eval_bus view{float: left;font-size: 0.8rem;width: auto;}
+.eval_bus image:nth-of-type(2){width: 40rpx;height: 40rpx;float: right;}
