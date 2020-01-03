@@ -5,11 +5,11 @@
 		</view>
 		<view class="center_box">
 			<view class="center_head">
-				<image src="../../static/images/logo.png" @tap="jump_on"></image>
+				<image :src="userinfo.userimg" @tap="jump_on"></image>
 			</view>
 			<view class="center_mtion">
-				<view class="center_name">Soul</view>
-				<view class="center_lable"><text>不出门的都是吃货</text>
+				<view class="center_name">{{userinfo.username}}</view>
+				<view class="center_lable"><text>{{userinfo.leaveword}}</text>
 					<image src="../../static/images/icon20.png"></image>
 				</view>
 			</view>
@@ -39,6 +39,7 @@
 	export default {
 		data() {
 			return {
+				userinfo:'',
 				unmber: [{
 					num: 0,
 					name: '粉丝数'
@@ -103,9 +104,51 @@
 					url:'link12'
 				}]
 			}
+		},onTabItemTap() {
+			console.log("usadhfiuo")
+			this.getuserinfo();
 		},
 		methods: {
-			order_le: function(methodsWords) {
+			getuserinfo(){
+				let _this = this;
+				console.log("sdf")
+				uni.request({
+					url: _this.http + '/PersonageController/getuserinfobyid.do',
+					method: 'POST',
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					data: {
+						usid: 5
+					},
+					success: res => {
+						console.log("res::::")
+						console.log(res)
+						let taiy_list = JSON.parse(res.data.data)
+						console.log("taiy_list::::")
+						console.log(taiy_list)
+						if (res.data.msg == 'succeed') {
+							this.userinfo=taiy_list
+							for(var i=0;i<this.unmber.length;i++){
+								if(this.unmber[i].name.trim() == '粉丝数'){
+									this.unmber[i].num = this.userinfo.userfans
+								}else if(this.unmber[i].name.trim() == '关注'){
+									this.unmber[i].num = this.userinfo.userattention
+								}
+								console.log(this.unmber[i].name.trim())
+							}
+							console.log("userinfo::::")
+							console.log(this.userinfo)
+						} else if (res.data.msg == 'failure') {
+							uni.showModal({
+								title: '温馨提示',
+								content: '暂无数据',
+								showCancel: false
+							});
+						}
+					}
+				})
+			},order_le: function(methodsWords) {
 				this[methodsWords]()
 			},
 			gopages: function(methodsWords) {
