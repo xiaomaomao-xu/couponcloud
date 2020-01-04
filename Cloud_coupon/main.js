@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App'
 
 Vue.config.productionTip = false
-Vue.prototype.http = 'http://cim.kaifanzhe.club/coupon';  
+Vue.prototype.http = 'http://cim.kaifanzhe.club';  
 
 
 App.mpType = 'app'

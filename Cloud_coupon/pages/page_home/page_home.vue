@@ -57,41 +57,7 @@
 		<view class="commodity">
 			<tab-max-auto class="tabmax" :navlist="navList" @loadData="loadData" @changeTab="changeTab" @tabClick="tabClick">
 				<view slot="scrollContent" v-show="tabCurrentIndex == 0" class="commodity_el" v-for="(item,index) in list_view" :key='index'>
-					<view class="business" @tap="businel">
-						<image v-if="https" :src="item.image"></image>
-						<view>
-							<text>{{item.name}}</text>
-							<text>{{item.disce}}</text>
-						</view>
-						<view>
-							<view>
-								<image v-if="https" :src="https+'/front_image/icon15.png'"></image>
-								<image v-if="https" :src="https+'/front_image/icon15.png'"></image>
-								<image v-if="https" :src="https+'/front_image/icon15.png'"></image>
-								<image v-if="https" :src="https+'/front_image/icon15.png'"></image>
-								<image v-if="https" :src="https+'/front_image/icon15.png'"></image>
-							</view>
-							
-							<text>{{item.sale}}</text>
-							<text>{{item.aste}}</text>
-						</view>
-						<view>
-							<text>评</text>
-							<text>{{item.eval}}</text>
-							<text>收藏</text>
-							<text>{{item.coll}}</text>
-						</view>
-					</view>
-					<view class="commodity_list" @tap="details" v-for="(item,index) in dity_list" :key='index' >
-						<image v-if="https" :src="item.pic"><text class="quan">{{item.coupon}}</text></image>
-						<view>{{item.introduce}}</view>
-						<view><text>原价:￥{{item.price}}</text><text>{{item.count}}折</text></view>
-						<view><text>券后:￥{{item.after}}</text></view>
-					</view>
-				</view>
-				
-				<view slot="scrollContent" v-show="tabCurrentIndex == 1" class="commodity_el" v-for="(item,index) in list_view" :key='index'>
-					<view class="business" @tap="businel">
+					<view class="business" @tap="businel(index)">
 						<image v-if="https" :src="item.image"></image>
 						<view>
 							<text>{{item.name}}</text>
@@ -255,9 +221,9 @@
 					success: res => {
 						if (res.data.msg == 'succeed') {
 							_this.navList = [];
-							var navLists = JSON.parse(res.data.data)
+							let navLists = JSON.parse(res.data.data)
 							console.log(navLists)
-							for (var i = 0; i < navLists.length; i++) {
+							for (let i = 0; i < navLists.length; i++) {
 								_this.navList.push({
 									id: navLists[i].sttyid,
 									title: navLists[i].sttyname
@@ -295,7 +261,8 @@
 						let comm_el = JSON.parse(res.data.data)
 						console.log(comm_el)
 						if (res.data.msg == 'succeed') {
-							for (var j = 0; j < comm_el.list.length; j++) {
+							for (let j=0;j<comm_el.list.length;j++) {
+								console.log(comm_el.list[j].stid)
 								_this.list_view.push({
 									image:_this.http + '/' +comm_el.list[j].obligatestrone,
 									name:comm_el.list[j].storename,
@@ -305,6 +272,7 @@
 									aste:comm_el.list[j].obligatestrtow + '米',
 									eval:comm_el.list[j].goodreputation + '人',
 									coll:comm_el.list[j].storefans+ '人',
+									stid:comm_el.list[j].stid
 								})
 								_this.dity_list.push({
 									pic:_this.http + '/' +comm_el.list[j].commoditylist[j].commodiimg,
@@ -341,7 +309,7 @@
 					success: res => {
 						let taiy_list = JSON.parse(res.data.data)
 						if (res.data.msg == 'succeed') {
-							for (var k = 0; k < taiy_list.length; k++) {
+							for (let k = 0; k < taiy_list.length; k++) {
 								_this.imgbox.push({
 									pic:_this.http + '/' +taiy_list[k].adverimg,
 								})
@@ -383,9 +351,10 @@
 					url: "../details/details"
 				})
 			},
-			businel: function() {
+			businel: function(index) {
+				let stid = this.list_view[index].stid
 				uni.navigateTo({
-					url: "../merchant/merchant"
+					url: "../merchant/merchant?id="+stid
 				})
 			},
 			RQcode: function() {
