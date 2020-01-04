@@ -52,7 +52,6 @@
 			},
 			getmycollect(){
 				let _this = this;
-				console.log(_this.longitude+":wei:"+_this.latitude)
 				uni.request({
 					url:_this.http+'/BusinessController/mystorecollect.do',
 					method:'POST',
