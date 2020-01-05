@@ -89,9 +89,9 @@
 						let voucher_list = JSON.parse(res.data.data)
 						_this.voucher.length = 0
 						console.log(voucher_list)
-						console.log(voucher_list.list[0].couponinfo.storeinfo)
 						if (res.data.msg == 'succeed') {
 							for (var l = 0; l < voucher_list.list.length; l++) {
+								console.log(voucher_time)
 								let voucher_time = new Date(voucher_list.list[l].couponinfo.createtime)
 								let year=voucher_time.getFullYear();
 							    let month=voucher_time.getMonth()+1; 

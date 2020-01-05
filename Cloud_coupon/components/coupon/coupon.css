@@ -1,4 +1,4 @@
-.coun_box{width: 100%;position: absolute;top: 00rpx;bottom: 20rpx;overflow: scroll;background: white;border-radius: 10rpx;padding-top: 20rpx;box-sizing: border-box;}
+.coun_box{width: 100%;height: auto;overflow: scroll;background: white;border-radius: 10rpx;padding-top: 20rpx;box-sizing: border-box;}
 .user_image{width: 95%;margin: 0 2.5%;position: relative;color: white;height: 250rpx;margin-bottom: 40rpx;}
 .user_image image{width: 100%;height: 100%;position: absolute;top: 0;left: 0;}
 .user_le{position: absolute;left: 0;width: 70%;height: 100%;padding: 60rpx 0 60rpx 40rpx;box-sizing: border-box;}

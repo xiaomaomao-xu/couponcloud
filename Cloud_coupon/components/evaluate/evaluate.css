@@ -10,7 +10,7 @@
 .new_le image{width: 30rpx;height: 30rpx;float: right;margin-top: 10rpx;}
 .new_ri{width: 100%;font-size: 0.8rem;color: #707070;}
 .center_box{width: 100%;height: auto;overflow: hidden;}
-.center_el{width: 100%;height: 120rpx;overflow: hidden;box-sizing: border-box;font-size: 0.8rem;clear: both;}
+.center_el{width: 100%;height: auto;overflow: hidden;box-sizing: border-box;font-size: 0.8rem;clear: both;}
 .center_box view:nth-of-type(2){font-size: 0.8rem;color: #ed6a04;}
  .showall.active {
     height: auto;
