@@ -52,7 +52,6 @@
 					},
 					success:res =>{
 						let collect_list = JSON.parse(res.data.data)
-						console.log(collect_list.frostmoney);
 						if(res.data.msg == 'succeed'){
 							this.collelist = collect_list
 						}else if(res.data.msg == 'failure'){
