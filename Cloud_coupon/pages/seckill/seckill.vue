@@ -28,9 +28,56 @@
 				show1: true,
 				show2: false,
 				show3: false,
+				district:'',
+				issuenumber:0,
 			}
 		},
+		onLoad() {
+			console.log( uni.getStorageSync("district"));
+			this.district = uni.getStorageSync("district")
+			this.getseckillinfo()
+		},
 		methods: {
+			//正在疯抢
+			getseckillinfo(){
+				let _this = this;
+				uni.request({
+					url: _this.http + '/ActivrecordController/getdessnoseckill.do',
+					method: 'POST',
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					data: {
+						pagenum:1,
+						issuenumber:_this.issuenumber,
+						seckilladreess: _this.district,
+						userid:1,
+					},
+					success: res => {
+						console.log(res)
+						if (res.data.msg == 'succeed') {
+							let top_list = JSON.parse(res.data.data)
+							console.log(top_list)
+							// let all = top_list.length
+							// for(let i = 0; i< all;i++){
+							// 	_this.data_list.push({
+							// 		pic:_this.http + '/' +top_list[i].wholesaleimg,
+							// 		name:top_list[i].couponinfo.storeinfo.storename,
+							// 		couponname:top_list[i].couponinfo.couponname,
+							// 		num:top_list[i].whoperson +'人团',
+							// 		numbox:top_list[i].wholesaleprorlenum +'人已参与',
+							// 	})
+							// }
+						} else if (res.data.msg == 'failure') {
+							uni.showModal({
+								title: '温馨提示',
+								content: '暂无数据',
+								showCancel: false
+							});
+						}
+					}
+				})
+			},
 			changeIndex(index) {
 				this.currentIndex = index;
 				if (index == 0) {

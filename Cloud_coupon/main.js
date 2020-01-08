@@ -3,7 +3,7 @@ import App from './App'
 
 Vue.config.productionTip = false
 Vue.prototype.http = 'http://cim.kaifanzhe.club';  
-
+//Vue.prototype.http = 'http://localhost:8088/coupon'; 
 
 App.mpType = 'app'
 

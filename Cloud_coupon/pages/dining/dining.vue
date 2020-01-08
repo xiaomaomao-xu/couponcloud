@@ -2,14 +2,14 @@
 	<view style="width: 100%;background: #f0f0f0;overflow: scroll;position: absolute;top: 0;left: 0;bottom: 120rpx;padding-bottom: 30rpx;box-sizing: border-box;">
 		<view class="dining_title">
 			<view class="dining_pic">
-				<image src="../../static/images/bar.jpg"></image>
+				<image :src="tail_pic"></image>
 			</view>
 			<view class="dining_text">
-				<view class="text_one">香港路重庆火锅店</view>
-				<view class="text_two">地址:汇川区香港路盛邦帝标</view>
+				<view class="text_one">{{tail_name}}</view>
+				<view class="text_two">地址:{{tail_address}}</view>
 				<view class="text_three">
-					<text>折扣券</text>
-					<text>10/20张</text>
+					<text>{{tail_coupon}}</text>
+					<text>{{tail_num}}/{{tail_numbers}}张</text>
 				</view>
 				<view class="text_four">
 					<view>
@@ -27,37 +27,29 @@
 		</view>
 		<view class="auth_data">
 			<view class="benner_title" @tap="open_box">
-				<view>40人正在拼单,可直接参与</view>
+				<view>{{num_el}}人正在拼单,可直接参与</view>
 				<view><text>查看更多</text><image src="../../static/images/icon13.png"></image></view>
 			</view>
 			<swiper vertical="true" autoplay="true" circular="true" interval="3000" style="height: 360rpx;">
-				<swiper-item v-for="(item, index) in msg" :key="index">
-					<view>
-						<image :src="item.pic"></image>
+				<swiper-item v-for="(item, index) in list_el" :key="index">
+					<view  v-for="(items,indexs) in item" :key="indexs">
+						<image :src="items.pic"></image>
 						<view>
-							<text>{{item.name}}</text>
-							<text>{{item.time}}</text>
+							<text>{{items.name}}</text>
+							<text>还差{{items.tnum}}人拼团结束</text>
 						</view>
-						<view><text>{{item.num}}</text></view>
-					</view>
-					<view>
-						<image :src="item.pic"></image>
-						<view>
-							<text>{{item.name}}</text>
-							<text>{{item.time}}</text>
-						</view>
-						<view><text>{{item.num}}</text></view>
+						<view><text>{{items.num}}</text></view>
 					</view>
 				</swiper-item>
 			</swiper>
 		</view>
 		<view class="dining_rule">
 			<view>活动规则</view>
-			<view>1.爱神的箭撒肯定就扫街都死啊基地啊搜集撒娇的窘境萨蒂哦撒决赛哦对死哦啊大家噢噢噢噢噢噢噢噢噢噢噢噢哦哦撒娇的赌东道赌东道撒大大大大大大撒东坡爱神的箭欧帕萨迪扫平的空间</view>
+			<view>{{attentionremark}}</view>
 		</view>
 		<view class="dining_ment">
-			<view>￥150</view>
-			<view>立即支付</view>
+			<view>￥{{money}}</view>
+			<view @tap="payment">立即支付</view>
 		</view>
 		<view class="popup" v-if="open">
 			<view class="time_list">
@@ -68,7 +60,7 @@
 						<image :src="item.pic"></image>
 						<view>
 							<text>{{item.name}}</text>
-							<text>{{item.time}}</text>
+							<text>还差{{item.tnum}}人拼团结束</text>
 						</view>
 						<view><text>{{item.num}}</text></view>
 					</view>
@@ -86,85 +78,125 @@
 				hour: '',
 				minu: '',
 				sec: '',
-				msg: [{
-					pic: "../../static/images/logo.png",
-					name: '某某商家已经认证',
-					time:'剩余10:28:26.00',
-					num: '去拼单'
-				}, {
-					pic: "../../static/images/logo.png",
-					name: '某某商家已经认证',
-					time:'剩余10:28:26.00',
-					num: '去拼单'
-				}, {
-					pic: "../../static/images/logo.png",
-					name: '某某商家已经认证',
-					time:'剩余10:28:26.00',
-					num: '去拼单'
-				}, {
-					pic: "../../static/images/logo.png",
-					name: '某某商家已经认证',
-					num: '去拼单'
-				}, {
-					pic: "../../static/images/logo.png",
-					name: '某某商家已经认证',
-					time:'剩余10:28:26.00',
-					num: '去拼单'
-				}, {
-					pic: "../../static/images/logo.png",
-					name: '某某商家已经认证',
-					time:'剩余10:28:26.00',
-					num: '去拼单'
-				}, {
-					pic: "../../static/images/logo.png",
-					name: '某某商家已经认证',
-					time:'剩余10:28:26.00',
-					num: '去拼单'
-				}, {
-					pic: "../../static/images/logo.png",
-					name: '某某商家已经认证',
-					time:'剩余10:28:26.00',
-					num: '去拼单'
-				}, ]
+				millisecond:'',
+				msg: [],
+				whoid:0,
+				tail_pic:'',
+				tail_name:'',
+				tail_address:'',
+				tail_coupon:'',
+				tail_numbers:'',
+				tail_num:'',
+				num_el:0,
+				list_el:[],
+				money:0,
+				tombstone:0,
+				attentionremark:'',
 			}
 		},
-		mounted: function() {
-			let date = new Date().getTime();
-			let time = new Date(date)
-			let hour = time.getHours();
-			let minu = time.getMinutes();
-			let sec = time.getSeconds();
-			let millisecond = time.getMilliseconds(); //毫秒
-			this.timer = setInterval(() => {
-				console.log(millisecond)
-				millisecond = millisecond - 1000;
-				if (millisecond <= 0) {
-					millisecond = 1000;
-					sec = sec - 1;
-				}
-				if (sec <= -1) {
-					sec = 59;
-					minu = minu - 1;
-				}
-
-				if (minu <= -1) {
-					minu = 59;
-					hour = hour - 1;
-				}
-				if (sec <= 9) {
-					sec = "0" + sec;
-				}
-				this.hour = hour
-				this.minu = minu
-				this.sec = sec
-			}, 1000);
+		onLoad(option) {
+			this.whoid = option.id
+			this.gettailsinfo()
 		},
 		methods: {
+			//拼团详情
+			gettailsinfo(){
+				let _this = this;
+				uni.request({
+					url: _this.http + '/ActivrecordController/getwholesaledetails.do',
+					method: 'POST',
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					data: {
+						whoid: _this.whoid		
+					},
+					success: res => {
+						if (res.data.msg == 'succeed') {
+							let details_list = JSON.parse(res.data.data)
+							console.log(details_list)
+							_this.tail_pic =_this.http + '/' + details_list.couponinfo.storeinfo.obligatestrone
+							_this.tail_name = details_list.couponinfo.storeinfo.storename
+							_this.tail_address = details_list.couponinfo.storeinfo.storeaddress
+							_this.tail_coupon = details_list.couponinfo.couponname
+							_this.tail_numbers  = details_list.couponinfo.couponnumbers 
+							_this.tail_num = details_list.couponinfo.drawcouponnum 
+							_this.num_el = details_list.wholesaleprorlenum
+							_this.money = details_list.colonelmonery/100
+							_this.tombstone =details_list.tombstone
+							_this.attentionremark = details_list.couponinfo.attentionremark
+							for(let i =0;i<details_list.groupbooklist.length;i++){
+								_this.msg.push({
+									pic: _this.http + '/' +details_list.groupbooklist[i].groupremark,
+									name: details_list.groupbooklist[i].groupname,
+									tnum:details_list.groupbooklist[i].grouppeoplenum - details_list.groupbooklist[i].currentnum,
+									num: '去拼单',
+								})
+							}
+							for(let j = 0; j<details_list.groupbooklist.length;j+=2){
+								_this.list_el.push(_this.msg.slice(j,j+2))
+							}
+							console.log(_this.msg)
+							//获取当前时间戳
+							let timestamp = (new Date()).getTime();
+							//结束时间时间戳
+							let timestamp1 = details_list.whoendtime
+							//获取时间戳的差距
+							let timestamp_el = timestamp1-timestamp
+							console.log(timestamp_el)
+							//计算的到时分秒
+							let hour = parseInt((timestamp_el % (1000 * 3600 *3600 * 24)) / (1000 * 60 * 60));
+							let minu = parseInt((timestamp_el % (1000 * 3600 )) / (1000 * 60));
+							let sec = parseInt((timestamp_el % (1000 * 60)) / 1000);
+							let millisecond = (timestamp_el % (1000)) / 1; //毫秒
+							this.timer = setInterval(() => {
+								millisecond = millisecond - 1000;
+								if (millisecond <= 0) {
+									millisecond = 1000;
+									sec = sec - 1;
+								}
+								if (sec <= -1) {
+									sec = 59;
+									minu = minu - 1;
+								}
+									
+								if (minu <= -1) {
+									minu = 59;
+									hour = hour - 1;
+								}
+								if (sec <= 9) {
+									sec = "0" + sec;
+								}
+								_this.hour = hour
+								_this.minu = minu
+								_this.sec = sec
+							}, 1000);
+						} else if (res.data.msg == 'failure') {
+							uni.showModal({
+								title: '温馨提示',
+								content: '暂无数据',
+								showCancel: false
+							});
+						}
+					}
+				})
+			},
 			open_box:function(){
 				this.open = !this.open
 			},
 			close:function(){
 				this.open = !this.open
+			},
+			payment(){
+				if(this.tombstone == 1){
+					
+				}else{
+					uni.showModal({
+						title: '温馨提示',
+						content: '该优惠券您已经开过团!结束后重新开团',
+						showCancel: false
+					});
+				}
 			}
 		}
 	}

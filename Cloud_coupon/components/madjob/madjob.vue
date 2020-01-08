@@ -3,7 +3,7 @@
 		<view class="madbox">
 			<view class="mad_title">
 				<image src="../../static/images/icon32.png" class="animated ring infinite"></image>
-				<view><text>09:00</text>正在疯抢</view>
+				<view><text>{{time}}</text>正在疯抢</view>
 			</view>
 			<view class="mad_time">
 				<view>距结束</view>
@@ -47,7 +47,6 @@
 			let sec = time.getSeconds();
 			let millisecond = time.getMilliseconds(); //毫秒
 			this.timer = setInterval(() => {
-				console.log(millisecond)
 				millisecond = millisecond - 1000;
 				if (millisecond <=0) {
 					millisecond =  1000;

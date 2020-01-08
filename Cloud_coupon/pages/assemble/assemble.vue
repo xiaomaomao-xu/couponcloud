@@ -52,7 +52,7 @@
 			</view>
 		</view>
 		<view class="riteoel">
-			<view class="pularity_el" @tap="dining" v-for="(item,index) in pularity" :key='index'>
+			<view class="pularity_el" @tap="dining(index)" v-for="(item,index) in pularity" :key='index'>
 				<image :src="item.pic"></image>
 				<view><text>NO1:</text><text>{{item.name}}</text></view>
 				<view><text>{{item.couponname}}</text><text>{{item.num}}</text></view>
@@ -85,9 +85,11 @@
 				this.sttyid = this.listbox[this.activeindex].sttyid
 				this.getgoonwhoinfo()
 			},
-			dining:function(){
+			dining(index){
+				let whoid = this.pularity[index].whoid
+				console.log(whoid)
 				uni.navigateTo({
-					url:'../dining/dining'
+					url:"../dining/dining?id="+whoid
 				})
 			},
 			url_pic(){
@@ -150,7 +152,6 @@
 						if (res.data.msg == 'succeed') {
 							let top_list = JSON.parse(res.data.data)
 							let all = top_list.length
-							let str=all%2==0?(all/2):(Math.floor(all/2)+1);
 							for(let i = 0; i< all;i++){
 								_this.data_list.push({
 									pic:_this.http + '/' +top_list[i].wholesaleimg,
@@ -236,8 +237,10 @@
 									couponname:goo_list.list[g].couponinfo.couponname,
 									num:goo_list.list[g].whoperson +'人团',
 									numbox:goo_list.list[g].wholesaleprorlenum +'人已参与',
+									whoid:goo_list.list[g].whoid
 								})
 							}
+							console.log(_this.pularity)
 							
 						} else if (res.data.msg == 'failure') {
 							uni.showModal({
