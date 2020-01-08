@@ -1,5 +1,6 @@
 <template>
 	<view style="position: absolute;top: 0;left: 0;width: 100%;bottom: 0;background: #F0F0F0;overflow: scroll;">
+		<scroll-view class="cart_list" scroll-y="true" @scrolltolower='lower'>
 		<view class="follow_box" >
 			<view class="post_titile" v-for="(item,index) in collelist" :key = 'index'>
 				<image v-if="https" :src="https+'/'+item.userinfo.userimg"></image>
@@ -12,6 +13,7 @@
 				</view>
 			</view>
 		</view>
+		</scroll-view>
 	</view>
 </template>
 
@@ -62,6 +64,11 @@
 						}
 					}
 				})
+			},//滚动到底部
+			lower(){
+				this.page=this.page+1;
+				console.log("下一页"+this.page);
+				this.getmygeneral();
 			}
 			
 		}
