@@ -193,10 +193,12 @@
 				});
 				this.amapPlugin.getRegeo({
 					success: data => {
+						console.log(data)
 					    let province = data[0].regeocodeData.addressComponent.province;
 					    let city = data[0].regeocodeData.addressComponent.city;
 					    let district = data[0].regeocodeData.addressComponent.district;
 						this.district = province + city + district
+						console.log(this.district)
 						this.longitude= data[0].longitude;
 						this.latitude= data[0].latitude;
 						this.tabList.push({
@@ -220,9 +222,17 @@
 					},
 					success: res => {
 						if (res.data.msg == 'succeed') {
+							try {
+							    uni.setStorageSync('district',this.district);
+							} catch (e) {
+							   uni.showModal({
+							   	title: '温馨提示',
+							   	content: '区域选择失败,请重新选择',
+							   	showCancel: false
+							   });
+							}
 							_this.navList = [];
 							let navLists = JSON.parse(res.data.data)
-							console.log(navLists)
 							for (let i = 0; i < navLists.length; i++) {
 								_this.navList.push({
 									id: navLists[i].sttyid,
@@ -258,9 +268,8 @@
 						longitude:_this.longitude
 					},
 					success: res => {
-						let comm_el = JSON.parse(res.data.data)
-						console.log(comm_el)
 						if (res.data.msg == 'succeed') {
+							let comm_el = JSON.parse(res.data.data)
 							for (let j=0;j<comm_el.list.length;j++) {
 								console.log(comm_el.list[j].stid)
 								_this.list_view.push({
@@ -307,8 +316,8 @@
 						district: _this.district
 					},
 					success: res => {
-						let taiy_list = JSON.parse(res.data.data)
 						if (res.data.msg == 'succeed') {
+							let taiy_list = JSON.parse(res.data.data)
 							for (let k = 0; k < taiy_list.length; k++) {
 								_this.imgbox.push({
 									pic:_this.http + '/' +taiy_list[k].adverimg,
@@ -372,13 +381,11 @@
 				this.defaultVal = item.value;
 				this.$refs[item.mode].show();
 			},
+			//确定选择区域
 			onConfirm(val) {
-				//如果页面需要调用多个mode类型，可以根据mode处理结果渲染到哪里;
-				// switch(this.mode){
-				// 	case "date":
-				// 		break;
-				// }
 				this.tabList[0].name = val.checkArr[2];
+				this.district = val.result
+				this.getshoptype()
 			},
 			//底部
 			changeIndex(index) {

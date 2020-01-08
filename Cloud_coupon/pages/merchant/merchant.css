@@ -26,7 +26,7 @@
 .active1{border-bottom: 2px solid #f17205;}
 
 .details{width: 100%;height: 700rpx;overflow: hidden;position: relative;}
-.image_box,.details video{width: 100%;height: 100%;position: absolute;top: 0;left: 0;}
+.image_box,.details video{width: 100%;height: 80%;position: absolute;top: 0;left: 0;}
 .image_box image{width: 100%;height: 100%;}
 .swiper{height: 700rpx;width: 100%;}
 .swiper-item{width: 100%;height: 700rpx;}

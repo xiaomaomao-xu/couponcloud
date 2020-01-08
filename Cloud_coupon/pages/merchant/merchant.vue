@@ -53,7 +53,7 @@
 						<text :coll_el='coll_el'>{{coll_el}}</text>
 					</view>
 				</view>
-				<view class="assembly">
+				<scroll-view class="assembly" :scroll-top="scrollTop" scroll-y="true" @scroll.stop.prevent  @scrolltolower="lower">
 					<view class="defect" v-show="defect_el">
 						<image v-if="https" :src="https+'/front_image/fault.png'"></image>
 						<text :defect_name='defect_name'>{{defect_name}}</text>
@@ -61,7 +61,7 @@
 					<postBox v-if="show1" :dity_list='dity_list'></postBox>
 					<couponBox v-if='show2' :voucher='voucher'></couponBox>
 					<evaluate v-if='show3' :viewlist='viewlist'></evaluate>
-				</view>
+				</scroll-view>
 			</view>
 		</view>
 	</view>
@@ -80,6 +80,7 @@
 
 		data() {
 			return {
+				scrollTop:0,
 				box_el: ['商品列表', '领券', '评论'],
 				mislist: 0,
 				showUpImg: true,
@@ -119,17 +120,15 @@
 				https: this.http,
 				defect_name: '该商家还没有商品哦！亲',
 				coll_el: '收藏',
-				tombstone: 0,
+				isclick: true,
+				pagenum:1,
+				pages:0,
+				pagesize:0,
 			}
 		},
 		onLoad(option) {
 			this.id = option.id
 			this.getshopinfo()
-			if (this.tombstone == 0) {
-				this.showUpImg = true
-			} else {
-				this.showUpImg = false
-			}
 		},
 		methods: {
 			//根据得到的商家id得到数据
@@ -148,15 +147,19 @@
 					success: res => {
 						let comm_el = JSON.parse(res.data.data)
 						if (res.data.msg == 'succeed') {
-							console.log(comm_el)
 							_this.name = comm_el.storeaddress
 							_this.marketcount = comm_el.marketcount
 							_this.storegrade = comm_el.storegrade
 							_this.video_el = _this.http + '/' + comm_el.storevideo
-							_this.tombstone = comm_el.tombstone
+							let tombstone = comm_el.tombstone
 							let image_list = comm_el.storeimg.split(',')
 							for (let h = 0; h < image_list.length; h++) {
 								_this.imgbox.push(_this.http + '/' + image_list[h])
+							}
+							if (tombstone == 0) {
+								this.showUpImg = true
+							} else {
+								this.showUpImg = false
 							}
 							_this.latcount()
 							_this.getstoreinfo()
@@ -181,12 +184,14 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					data: {
-						pagenum: 1,
+						pagenum: _this.pagenum,
 						storeid: _this.id,
 					},
 					success: res => {
 						let taiy_list = JSON.parse(res.data.data)
 						if (res.data.msg == 'succeed') {
+							_this.pages = taiy_list.pages
+							_this.pagesize = taiy_list.pageSize
 							for (let k = 0; k < taiy_list.list.length; k++) {
 								_this.dity_list.push({
 									image: _this.http + '/' + taiy_list.list[k].commodiimg,
@@ -212,7 +217,7 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					data: {
-						pagenum: 1,
+						pagenum: _this.pagenum,
 						storeid: _this.id,
 					},
 					success: res => {
@@ -245,11 +250,10 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					data: {
-						pagenum: 1,
+						pagenum: _this.pagenum,
 						storeid: _this.id,
 					},
 					success: res => {
-						console.log(res)
 						let viewlist = JSON.parse(res.data.data)
 						if (res.data.msg == 'succeed') {
 							for (let l = 0; l < viewlist.list.length; l++) {
@@ -349,14 +353,35 @@
 				this.HN_top = (offY + ty) + 'px'
 			},
 			handletouchend: function(event) {
+				console.log(event.changedTouches[0].pageY)
+				console.log(this.lastY)
+				//下拉
 				if (event.changedTouches[0].pageY - this.lastY > 0) {
 					let _this = this;
 					//获取当前窗口高度
 					uni.getSystemInfo({
 						success: function(res) {
 							_this.HN_height = res.windowHeight
-							if (parseInt(_this.HN_top) > 0 && parseInt(_this.HN_top) < _this.HN_height / 2) {
-								_this.HN_top = 200 + 'rpx'
+							 if (parseInt(_this.HN_top) > 0 && parseInt(_this.HN_top) < _this.HN_height / 2) {
+								_this.HN_top = 300 + 'rpx'
+							} else {
+								_this.HN_top = 640 + 'rpx'
+							}
+						}
+					});
+					this.flag = 0;
+					this.text = '没有滑动'
+				}
+				//上拉
+				if ( this.lastY - event.changedTouches[0].pageY > 0) {
+					let _this = this;
+					//获取当前窗口高度
+					uni.getSystemInfo({
+						success: function(res) {
+							_this.HN_height = res.windowHeight
+							console.log(_this.HN_top)
+							if (parseInt(_this.HN_top) < 170) {
+								_this.HN_top = 300 + 'rpx'
 							} else {
 								_this.HN_top = 640 + 'rpx'
 							}
@@ -380,20 +405,37 @@
 						storeid: _this.id,
 					},
 					success: res => {
-						console.log(res)
+						if (res.data.msg == 'succeed') {
+							this.getshopinfo()
+						} else if (res.data.msg == 'failure') {
+							uni.showModal({
+								title: '温馨提示',
+								content: '服务器请求错误',
+								showCancel: false
+							});
+						}
 					}
 				})
-				this.getshopinfo()
+
+			},
+			lower: function(e) {
+				let all = this.pages
+				let item = this.pagesize
+				let pages=all%item==0?(all/item):(Math.floor(all/item)+1);
+				if(this.pagenum<pages){
+					this.pagenum = this.pagenum+1
+				    this.getstoreinfo()
+				}
 			},
 			//点击是否收藏店铺
 			collection() {
-				console.log(this.tombstone)
-				if (this.tombstone == 0) {
-					this.showUpImg = false
-					this.getputstorebyinfo()
-				} else {
-					this.showUpImg = true
-					this.getputstorebyinfo()
+				let _this = this
+				if(_this.isclick) {
+					_this.isclick = false
+					_this.getputstorebyinfo()
+					setTimeout(function() {
+						_this.isclick = true
+					}, 500);
 				}
 			}
 		}
