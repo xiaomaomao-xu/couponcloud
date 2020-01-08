@@ -55,6 +55,7 @@
 				this.titleindex = index
 				this.start = this.titleindex
 				this.getyuyues()
+				
 			},
 			open_box:function(){
 				this.open = !this.open
@@ -76,9 +77,10 @@
 						tombstone:this.start,
 					},
 					success:res =>{
-						let collect_list = JSON.parse(res.data.data)
+						this.collelist.splice(0,this.collelist.length)
+						console.log(this.collelist)
 						if(res.data.msg == 'succeed'){
-							console.log(collect_list)
+							let collect_list = JSON.parse(res.data.data)
 							for (var l = 0; l < collect_list.list.length; l++) {
 								//开始时间
 								let voucher_begintime = new Date(collect_list.list[l].seckillinfo.seckilltime)
@@ -93,7 +95,7 @@
 								//获取当前时间戳
 								let timestamp = (new Date()).getTime();
 								//结束时间时间戳
-								let timestamp1 = collect_list.list[l].seckillinfo.seckillendtime
+								let timestamp1 = collect_list.list[l].seckillinfo.seckilltime
 								//获取时间戳的差距
 								let timestamp_el = timestamp1-timestamp
 								console.log(timestamp_el)
@@ -102,6 +104,20 @@
 								let minu = parseInt((timestamp_el % (1000 * 3600 )) / (1000 * 60));
 								let sec = parseInt((timestamp_el % (1000 * 60)) / 1000);
 			                    let millisecond = (timestamp_el % (1000)) / 1; //毫秒
+								if(timestamp_el<=0){
+									hour = 0;
+									minu = 0;
+									sec = 0;
+									millisecond = 0;
+								}
+								
+								if(this.start == 1 || this.start == 2){
+									hour = 0;
+									minu = 0;
+									sec = 0;
+									millisecond = 0;
+								}
+								
 								_this.collelist.push({
 									pic: _this.https+'/'+collect_list.list[l].seckillinfo.couponinfo.storeinfo.obligatestrone,
 									name:collect_list.list[l].seckillinfo.couponinfo.storeinfo.storename,
@@ -115,9 +131,9 @@
 									millisecond:millisecond,
 								})
 							}
-							
 							for(let o = 0;o<_this.collelist.length;o++){
-								this.timer = setInterval(() => {
+								clearInterval(_this.timer)
+								_this.timer = setInterval(() => {
 									_this.collelist[o].millisecond = _this.collelist[o].millisecond - 1000;
 									if (_this.collelist[o].millisecond <= 0) {
 										_this.collelist[o].millisecond = 1000;
@@ -137,23 +153,21 @@
 									}
 								}, 1000);
 							}
-							
 							console.log(_this.collelist)
-							
-							// let atime = new Date(collect_list.list[0].seckillinfo.seckillendtime)
-							// let btime =new Date();
-							// console.log(atime);
-							
+							if(this.start == 1 || this.start == 2){
+								console.log( "我进入了")
+								clearInterval(_this.timer)
+							}
 						}else if(res.data.msg == 'failure'){
-							uni.showModal({
-								title: '温馨提示',
-								content: '暂无数据',
-								showCancel: false
-							});
+							clearInterval(_this.timer)
+							
 						}
 					}
 				})
 			}
+		},
+		onHide() {
+			clearInterval(timer)
 		}
 	}
 </script>

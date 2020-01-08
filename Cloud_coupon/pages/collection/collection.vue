@@ -1,8 +1,9 @@
 <template>
 	<view style="position: absolute;top: 0;bottom: 0;width: 100%;left: 0;background: white;height: auto;overflow: scroll;">
+		<scroll-view class="cart_list" scroll-y="true" @scrolltolower='lower'>
 		<view class="collect"  v-for="(item,index) in collelist" :key = 'index'>
 			<view class="collect_le">
-				<image v-if="https" :src="https+'/'+item.storeinfo.storeimg"></image>
+				<image v-if="https" :src="https+'/'+item.storeinfo.obligatestrone"></image>
 			</view>
 			<view class="collect_ri">
 				<view class="collect_add">
@@ -19,6 +20,7 @@
 				<view class="collect_res">{{item.storeinfo.storeaddress}}</view>
 			</view>
 		</view>
+		</scroll-view>
 	</view>
 </template>
 
@@ -32,9 +34,19 @@
 				key: '6ffbe58a99e0487a6012276570256325',
 				latitude:'',
 				longitude:'',
+				pagenum:1,
 			}
 		},onLoad() {
 			this.getiddress();
+			uni.getLocation({
+				type: 'wgs84',
+				success: res => {
+					this.latitude = res.latitude
+					this.longitude = res.longitude
+				}
+			})
+			
+			
 		},
 		methods: {
 			//获取区域位置
@@ -61,16 +73,14 @@
 					data:{
 						longitude:_this.longitude,
 						latitude:_this.latitude,
-						pagenum:1,
+						pagenum:_this.pagenum,
 						userid:5,
 					},
 					success:res =>{
 						
 						let collect_list = JSON.parse(res.data.data)
-						console.log(collect_list);
 						if(res.data.msg == 'succeed'){
 							this.collelist = collect_list.list;
-							console.log(this.collelist);
 						}else if(res.data.msg == 'failure'){
 							uni.showModal({
 								title: '温馨提示',
@@ -80,6 +90,11 @@
 						}
 					}
 				})
+			},//滚动到底部
+			lower(){
+				this.page=this.page+1;
+				console.log("下一页"+this.page);
+				this.getmygeneral();
 			}
 		}
 	}
