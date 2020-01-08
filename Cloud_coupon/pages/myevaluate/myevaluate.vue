@@ -1,6 +1,7 @@
 <template>
 	<view style="position: absolute;top: 0;bottom: 0;left: 0;width: 100%;background: #F0F0F0;overflow: scroll;">
 		<view class="eval_title">我的评价</view>
+		<scroll-view class="cart_list"  scroll-y="true" @scrolltolower="lower" style="height:100% ;">
 		<view class="commodity_el" v-for="(item,index) in collelist" :key='index'>
 			<view class="business">
 				<image v-if="https" :src="https+'/'+item.userinfo.userimg"></image>
@@ -29,6 +30,7 @@
 				</view>
 			</view>
 		</view>
+		</scroll-view>
 	</view>
 </template>
 
@@ -36,6 +38,8 @@
 	export default {
 		data() {
 			return {
+				pas:1,
+				pbs:1,
 				collelist:[],
 				https:this.http,
 				pagenum:1,
@@ -69,11 +73,30 @@
 						userid:5,
 					},
 					success:res =>{
-						let collect_list = JSON.parse(res.data.data)
-						console.log(collect_list);
-						this.collelist=collect_list.list
-						console.log(this.collelist)
 						if(res.data.msg == 'succeed'){
+							let collect_list = JSON.parse(res.data.data)
+							let pagenums = collect_list.pageNum
+							let pageSize = collect_list.pageSize
+							let pages = collect_list.pages
+							
+							let a=parseInt(pages/pageSize)
+							let b=pages%pageSize
+							if(b>0){
+								a=a+1
+							}
+							this.pas = a
+							
+							
+							if(this.pagenum==1){
+								this.collelist=collect_list.list
+							}else{
+								if(this.pagenum <= a){
+									for(var l = 0; l < collect_list.list.length; l++){
+										this.collelist.push(collect_list.list[l])
+									}
+								}
+								
+							}
 							for (var l = 0; l < collect_list.list.length; l++) {
 								let voucher_time = new Date(collect_list.list[l].createtime)
 								let year=voucher_time.getFullYear();
@@ -102,6 +125,13 @@
 			latcount(lse) {
 				for (let m = 0; m < stgr; m++) {
 					this.latitude[m].pic = '../../static/images/icon14.png'
+				}
+			},//滚动到底部
+			lower(){
+				this.pagenum=this.pagenum+1;
+				if(this.pagenum <= this.pas){
+					console.log("下一页"+this.pagenum);
+					this.getmypinlun();
 				}
 			}
 		}

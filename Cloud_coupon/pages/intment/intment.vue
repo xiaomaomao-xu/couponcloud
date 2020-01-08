@@ -6,6 +6,7 @@
 			</view>
 		</view>
 		
+		<scroll-view class="cart_list"  scroll-y="true" @scrolltolower="lower" style="height:100% ;">
 		<view class="dining_title" v-for="(item,index) in collelist" :key='index'>
 			<view class="dining_pic">
 				<image v-if="https" :src="item.pic"></image>
@@ -30,6 +31,7 @@
 				</view>
 			</view>
 		</view>
+		</scroll-view>
 	</view>
 </template>
 
@@ -45,6 +47,8 @@
 				https:this.http,
 				pagenum:1,
 				result:{},
+				pas:1,
+				pbs:1,
 			}
 		},
 		onLoad() {
@@ -78,96 +82,195 @@
 					},
 					success:res =>{
 						this.collelist.splice(0,this.collelist.length)
-						console.log(this.collelist)
+						
 						if(res.data.msg == 'succeed'){
 							let collect_list = JSON.parse(res.data.data)
-							for (var l = 0; l < collect_list.list.length; l++) {
-								//开始时间
-								let voucher_begintime = new Date(collect_list.list[l].seckillinfo.seckilltime)
-								let beginyear=voucher_begintime.getFullYear();
-								let beginmonth=voucher_begintime.getMonth()+1; 
-								let beginday=voucher_begintime.getDate(); 
-								//结束时间
-								let voucher_endtime = new Date(collect_list.list[l].seckillinfo.seckillendtime)
-								let endyear=voucher_endtime.getFullYear();
-								let endmonth=voucher_endtime.getMonth()+1; 
-								let endday=voucher_endtime.getDate(); 
-								//获取当前时间戳
-								let timestamp = (new Date()).getTime();
-								//结束时间时间戳
-								let timestamp1 = collect_list.list[l].seckillinfo.seckilltime
-								//获取时间戳的差距
-								let timestamp_el = timestamp1-timestamp
-								console.log(timestamp_el)
-								//计算的到时分秒
-								let hour = parseInt((timestamp_el % (1000 * 3600 *3600 * 24)) / (1000 * 60 * 60));
-								let minu = parseInt((timestamp_el % (1000 * 3600 )) / (1000 * 60));
-								let sec = parseInt((timestamp_el % (1000 * 60)) / 1000);
-			                    let millisecond = (timestamp_el % (1000)) / 1; //毫秒
-								if(timestamp_el<=0){
-									hour = 0;
-									minu = 0;
-									sec = 0;
-									millisecond = 0;
+							console.log(collect_list)
+							//分页
+							let pagenums = collect_list.pageNum
+							let pageSize = collect_list.pageSize
+							let pages = collect_list.pages
+							
+							let a=parseInt(pages/pageSize)
+							let b=pages%pageSize
+							if(b>0){
+								a=a+1
+							}
+							this.pas = a
+							
+							if(this.pagenum==1){
+								//第一页
+								for (var l = 0; l < collect_list.list.length; l++) {
+									//开始时间
+									let voucher_begintime = new Date(collect_list.list[l].seckillinfo.seckilltime)
+									let beginyear=voucher_begintime.getFullYear();
+									let beginmonth=voucher_begintime.getMonth()+1; 
+									let beginday=voucher_begintime.getDate(); 
+									//结束时间
+									let voucher_endtime = new Date(collect_list.list[l].seckillinfo.seckillendtime)
+									let endyear=voucher_endtime.getFullYear();
+									let endmonth=voucher_endtime.getMonth()+1; 
+									let endday=voucher_endtime.getDate(); 
+									//获取当前时间戳
+									let timestamp = (new Date()).getTime();
+									//结束时间时间戳
+									let timestamp1 = collect_list.list[l].seckillinfo.seckilltime
+									//获取时间戳的差距
+									let timestamp_el = timestamp1-timestamp
+									//计算的到时分秒
+									let hour = parseInt((timestamp_el % (1000 * 3600 *3600 * 24)) / (1000 * 60 * 60));
+									let minu = parseInt((timestamp_el % (1000 * 3600 )) / (1000 * 60));
+									let sec = parseInt((timestamp_el % (1000 * 60)) / 1000);
+								    let millisecond = (timestamp_el % (1000)) / 1; //毫秒
+									if(timestamp_el<=0){
+										hour = 0;
+										minu = 0;
+										sec = 0;
+										millisecond = 0;
+									}
+									
+									if(this.start == 1 || this.start == 2){
+										hour = 0;
+										minu = 0;
+										sec = 0;
+										millisecond = 0;
+									}
+									
+									_this.collelist.push({
+										pic: _this.https+'/'+collect_list.list[l].seckillinfo.couponinfo.storeinfo.obligatestrone,
+										name:collect_list.list[l].seckillinfo.couponinfo.storeinfo.storename,
+										address:collect_list.list[l].seckillinfo.couponinfo.storeinfo.storeaddress,
+										coupon:collect_list.list[l].seckillinfo.couponinfo.couponname,
+										orderid:beginyear+'.'+beginmonth+'.'+beginday,
+										warnremark:endyear+'.'+endmonth+'.'+endday,
+										hour: hour,
+										minu: minu,
+										sec: sec,
+										millisecond:millisecond,
+									})
 								}
-								
+								for(let o = 0;o<_this.collelist.length;o++){
+									clearInterval(_this.timer)
+									_this.timer = setInterval(() => {
+										_this.collelist[o].millisecond = _this.collelist[o].millisecond - 1000;
+										if (_this.collelist[o].millisecond <= 0) {
+											_this.collelist[o].millisecond = 1000;
+											_this.collelist[o].sec = _this.collelist[o].sec - 1;
+										}
+										if (_this.collelist[o].sec <= -1) {
+											_this.collelist[o].sec = 59;
+											_this.collelist[o].minu = _this.collelist[o].minu - 1;
+										}
+											
+										if (_this.collelist[o].minu <= -1) {
+											_this.collelist[o].minu = 59;
+											_this.collelist[o].hour = _this.collelist[o].hour - 1;
+										}
+										if (_this.collelist[o].sec <= 9) {
+											_this.collelist[o].sec = "0" + _this.collelist[o].sec;
+										}
+									}, 1000);
+								}
 								if(this.start == 1 || this.start == 2){
-									hour = 0;
-									minu = 0;
-									sec = 0;
-									millisecond = 0;
+									clearInterval(_this.timer)
 								}
 								
-								_this.collelist.push({
-									pic: _this.https+'/'+collect_list.list[l].seckillinfo.couponinfo.storeinfo.obligatestrone,
-									name:collect_list.list[l].seckillinfo.couponinfo.storeinfo.storename,
-									address:collect_list.list[l].seckillinfo.couponinfo.storeinfo.storeaddress,
-									coupon:collect_list.list[l].seckillinfo.couponinfo.couponname,
-									orderid:beginyear+'.'+beginmonth+'.'+beginday,
-									warnremark:endyear+'.'+endmonth+'.'+endday,
-									hour: hour,
-									minu: minu,
-									sec: sec,
-									millisecond:millisecond,
-								})
-							}
-							for(let o = 0;o<_this.collelist.length;o++){
-								clearInterval(_this.timer)
-								_this.timer = setInterval(() => {
-									_this.collelist[o].millisecond = _this.collelist[o].millisecond - 1000;
-									if (_this.collelist[o].millisecond <= 0) {
-										_this.collelist[o].millisecond = 1000;
-										_this.collelist[o].sec = _this.collelist[o].sec - 1;
-									}
-									if (_this.collelist[o].sec <= -1) {
-										_this.collelist[o].sec = 59;
-										_this.collelist[o].minu = _this.collelist[o].minu - 1;
-									}
+								
+							}else{
+								if(this.pagenum <= a){
+									for(var l = 0; l < collect_list.list.length; l++){
+										for (var l = 0; l < collect_list.list.length; l++) {
+											//开始时间
+											let voucher_begintime = new Date(collect_list.list[l].seckillinfo.seckilltime)
+											let beginyear=voucher_begintime.getFullYear();
+											let beginmonth=voucher_begintime.getMonth()+1; 
+											let beginday=voucher_begintime.getDate(); 
+											//结束时间
+											let voucher_endtime = new Date(collect_list.list[l].seckillinfo.seckillendtime)
+											let endyear=voucher_endtime.getFullYear();
+											let endmonth=voucher_endtime.getMonth()+1; 
+											let endday=voucher_endtime.getDate(); 
+											//获取当前时间戳
+											let timestamp = (new Date()).getTime();
+											//结束时间时间戳
+											let timestamp1 = collect_list.list[l].seckillinfo.seckilltime
+											//获取时间戳的差距
+											let timestamp_el = timestamp1-timestamp
+											//计算的到时分秒
+											let hour = parseInt((timestamp_el % (1000 * 3600 *3600 * 24)) / (1000 * 60 * 60));
+											let minu = parseInt((timestamp_el % (1000 * 3600 )) / (1000 * 60));
+											let sec = parseInt((timestamp_el % (1000 * 60)) / 1000);
+										    let millisecond = (timestamp_el % (1000)) / 1; //毫秒
+											if(timestamp_el<=0){
+												hour = 0;
+												minu = 0;
+												sec = 0;
+												millisecond = 0;
+											}
+											
+											if(this.start == 1 || this.start == 2){
+												hour = 0;
+												minu = 0;
+												sec = 0;
+												millisecond = 0;
+											}
+											
+											_this.collelist.push({
+												pic: _this.https+'/'+collect_list.list[l].seckillinfo.couponinfo.storeinfo.obligatestrone,
+												name:collect_list.list[l].seckillinfo.couponinfo.storeinfo.storename,
+												address:collect_list.list[l].seckillinfo.couponinfo.storeinfo.storeaddress,
+												coupon:collect_list.list[l].seckillinfo.couponinfo.couponname,
+												orderid:beginyear+'.'+beginmonth+'.'+beginday,
+												warnremark:endyear+'.'+endmonth+'.'+endday,
+												hour: hour,
+												minu: minu,
+												sec: sec,
+												millisecond:millisecond,
+											})
+										}
+										for(let o = 0;o<_this.collelist.length;o++){
+											clearInterval(_this.timer)
+											_this.timer = setInterval(() => {
+												_this.collelist[o].millisecond = _this.collelist[o].millisecond - 1000;
+												if (_this.collelist[o].millisecond <= 0) {
+													_this.collelist[o].millisecond = 1000;
+													_this.collelist[o].sec = _this.collelist[o].sec - 1;
+												}
+												if (_this.collelist[o].sec <= -1) {
+													_this.collelist[o].sec = 59;
+													_this.collelist[o].minu = _this.collelist[o].minu - 1;
+												}
+													
+												if (_this.collelist[o].minu <= -1) {
+													_this.collelist[o].minu = 59;
+													_this.collelist[o].hour = _this.collelist[o].hour - 1;
+												}
+												if (_this.collelist[o].sec <= 9) {
+													_this.collelist[o].sec = "0" + _this.collelist[o].sec;
+												}
+											}, 1000);
+										}
+										if(this.start == 1 || this.start == 2){
+											clearInterval(_this.timer)
+										}
 										
-									if (_this.collelist[o].minu <= -1) {
-										_this.collelist[o].minu = 59;
-										_this.collelist[o].hour = _this.collelist[o].hour - 1;
 									}
-									if (_this.collelist[o].sec <= 9) {
-										_this.collelist[o].sec = "0" + _this.collelist[o].sec;
-									}
-								}, 1000);
+								}
+								
 							}
-							console.log(_this.collelist)
-							if(this.start == 1 || this.start == 2){
-								console.log( "我进入了")
-								clearInterval(_this.timer)
-							}
+							console.log(this.collelist)
 						}else if(res.data.msg == 'failure'){
 							clearInterval(_this.timer)
-							
 						}
 					}
 				})
+			},//滚动到底部
+			lower(){
+				this.pagenum=this.pagenum+1;
+				if(this.pagenum <= this.pas){
+					this.getmypinlun();
+				}
 			}
-		},
-		onHide() {
-			clearInterval(timer)
 		}
 	}
 </script>

@@ -3,16 +3,16 @@
 		<view class="wallet_view">
 			<view class="view_pic"><image src="../../static/images/icon35.png"></image></view>
 			<view>我的零钱</view>
-			<view>总金额:{{collelist.totalmoney}}</view>
+			<view>总金额:{{collelist.totalmoney/100}}</view>
 			<view @tap="sumption">消费记录</view>
 			<view class="wallet_el">
 				<view>
 					<view>可用金额</view>
-					<view>{{collelist.usablemoney}}</view>
+					<view>{{collelist.usablemoney/100}}</view>
 				</view>
 				<view>
 					<view>冻结金额</view>
-					<view>{{collelist.frostmoney}}</view>
+					<view>{{collelist.frostmoney/100}}</view>
 				</view>
 			</view>
 		</view>
