@@ -92,7 +92,6 @@
 							}
 							this.pas = a
 							
-							
 							if(this.pagenum==1){
 								this.collelist=collect_list.list
 								console.log(this.collelist)
@@ -101,9 +100,18 @@
 									for(var l = 0; l < collect_list.list.length; l++){
 										this.collelist.push(collect_list.list[l])
 									}
+									console.log(this.collelist)
 								}
 								
 							}
+							for (var l = 0; l < collect_list.list.length; l++) {
+								let voucher_time = new Date(collect_list.list[l].createtime)
+								let year=voucher_time.getFullYear();
+							    let month=voucher_time.getMonth()+1; 
+							    let day=voucher_time.getDate(); 
+								collect_list.list[l].cochaddress = ""+year+'年'+month+'月'+day+'日'
+							}
+							
 						}else if(res.data.msg == 'failure'){
 							uni.showModal({
 								title: '温馨提示',
