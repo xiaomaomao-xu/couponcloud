@@ -1,9 +1,9 @@
 <template>
 	<view style="width: 100%;position: absolute;top: 0;left: 0;bottom: 0;height: auto;overflow: scroll;background: #f0f0f0;">
 		<view class="time_box">
-			<input type="text" placeholder="初始时间" disabled="disable">
-			<input type="text" placeholder="结束时间" disabled="disable">
-			<view>数据查询</view>
+			<input type="text" placeholder="初始时间" v-model="startDate">
+			<input type="text" placeholder="结束时间" v-model="endDate">
+			<view @click="getcouponrecord">数据查询</view>
 		</view>
 		<view class="pic_title">
 			<view>
@@ -86,6 +86,8 @@
 	export default {
 		data() {
 			return {
+				startDate:'',
+				endDate:'',
 				cWidth: '',
 				cHeight: '',
 				pixelRatio: 1,
@@ -93,19 +95,22 @@
 				Interactive: '', //交互显示的数据
 				LineA: {
 					categories: ['10月18', '10月19', '10月20', '10月21', '10月22', '10月23','10月18', '10月19', '10月20', '10月21', '10月22', '10月23'],
-					series: [{
+					// categories: ['10月18', '10月19'],
+					series: [
+						{
 						name: '发券量',
 						data: [5, 2, 5, 7, 4, 2, 5, 2, 5, 7, 4, 2]
 					}, {
 						name: '领券量',
-						data: [7, 4, 6, 10, 4, 6, 7, 4, 6, 10, 4, 6, ]
+						data: [7, 4, 6, 10, 4, 6, 7, 4, 6, 9, 4, 6, ]
 					}, {
 						name: '已领券',
-						data: [10, 8, 5, 5, 2, 1, 7, 4, 6, 10, 4, 6, ]
+						data: [10, 8, 5, 5, 2, 1, 7, 4, 6, 10, 4, 5, ]
 					}, {
 						name: '已使用',
-						data: [6, 3, 8, 2, 3, 11, 7, 4, 6, 10, 4, 6, ]
-					}]
+						data: [6, 3, 8, 2, 3, 11, 7, 4, 6, 8, 4, 2, ]
+					},
+					]
 				}
 			}
 		},
@@ -117,6 +122,8 @@
 					if (res.pixelRatio > 1) {
 						//正常这里给2就行，如果pixelRatio=3性能会降低一点
 						//_self.pixelRatio =res.pixelRatio;
+						console.log("adfasdfasdfasd")
+						console.log("asdasdfasdfsad545555")
 						_self.pixelRatio = 2;
 					}
 				}
@@ -127,6 +134,47 @@
 			this.getServerData();
 		},
 		methods: {
+			getcouponrecord(){
+				let _this = this;
+				var startdate = new Date(this.startDate)
+				var enddate = new Date(this.endDate)
+				console.log("startdate")
+				console.log(startdate)
+				console.log("enddate")
+				console.log(enddate)
+				uni.request({
+					url: _this.http + '/MerchantController/getstorebyidcouponlist.do',
+					method: 'POST',
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					data: {
+						altertime:startdate,
+						createtime: enddate,
+						scrstore: uni.getStorageSync('storeid')
+					},
+					success: res => {
+						let taiy_list = JSON.parse(res.data.data)
+						if (res.data.msg == 'succeed') {
+							console.log("taiy_list")
+							console.log(taiy_list)
+							// if(this.page==1){
+							// 	this.list=taiy_list.list
+							// }else{
+							// 	for(var i=0;i<taiy_list.list.length;i++){
+							// 		this.list.push(taiy_list.list[i])
+							// 	}
+							// }
+						} else if (res.data.msg == 'failure') {
+							uni.showModal({
+								title: '温馨提示',
+								content: '暂无数据',
+								showCancel: false
+							});
+						}
+					}
+				})
+			},
 			getServerData() {
 				let LineA = this.LineA;
 				LineA.categories = this.LineA.categories;
