@@ -2,19 +2,19 @@
 	<view class="center">
 		<view class="business_top">
 			<view>总收益</view>
-			<view>￥1562.00</view>
+			<view>￥{{storeinfo.myearnings}}</view>
 			<view>"通过核销优惠券产生的收益"</view>
 			<view class="coupon_box">
 				<view>
-					<text>500</text>
+					<text>{{storeinfo.sendcoupon}}</text>
 					<text>总发券量</text>
 				</view>
 				<view>
-					<text>500</text>
+					<text>{{storeinfo.getcoupon}}</text>
 					<text>总领券量</text>
 				</view>
 				<view>
-					<text>500</text>
+					<text>{{storeinfo.usecoupon}}</text>
 					<text>总使用量</text>
 				</view>
 			</view>
@@ -39,6 +39,7 @@
 	export default {
 		data() {
 			return {
+				storeinfo:'',
 				busineBox:[{
 					pic:'../../static/images/bus1.png',
 					name:'发券',
@@ -75,9 +76,39 @@
 			}
 		},
 		onLoad() {
-
+			this.getstoreinfo()
 		},
 		methods: {
+			getstoreinfo(){
+				let _this = this;
+				uni.request({
+					url: _this.http + '/MerchantController/putaccessstoreer.do',
+					method: 'POST',
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					data: {
+						userid: 5
+					},
+					success: res => {
+						let taiy_list = JSON.parse(res.data.data)
+						if (res.data.msg == 'auditpass' || res.data.msg == 'audituppass') {
+							this.storeinfo=taiy_list
+							console.log("this.storeinfo.stid")
+							console.log(this.storeinfo.stid)
+							uni.setStorageSync('storeid', this.storeinfo.stid);
+							console.log("this.storeinfo:::")
+							console.log(this.storeinfo)
+						} else if (res.data.msg == 'failure') {
+							uni.showModal({
+								title: '温馨提示',
+								content: '暂无数据',
+								showCancel: false
+							});
+						}
+					}
+				})
+			},
 			order_le: function(methodsWords) {
 				this[methodsWords]()
 			},
