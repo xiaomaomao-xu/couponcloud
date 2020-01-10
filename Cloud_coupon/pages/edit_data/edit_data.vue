@@ -2,7 +2,7 @@
 	<view class="center">
 		<view class="edit_pic">
 			<view class="pic_el">
-				<image :src="userinfo.userimg"></image>
+				<image :src="uploadimg"></image>
 				<!-- <input type="hidden" v-model="userinfo.userimg"> -->
 				<view @click="changeImg">点击更换头像</view>
 			</view>
@@ -54,7 +54,6 @@
 				index: 3,
 			}
 		},onLoad() {
-			console.log("tusdyatfu")
 			this.getuserinfo();
 		},
 		methods: {
@@ -65,29 +64,18 @@
 						const tempFilePaths = chooseImageRes.tempFilePaths;
 						this.changeimg = tempFilePaths[0] 
 						uni.uploadFile({
-							url: _this.http + 'pload/pictureUpLoad.do', 
+							url: _this.http + '/pload/pictureUpLoad.do', 
 							filePath: tempFilePaths[0],
 							name: 'file',
 							success: (res) => {
-								this.userinfo.userimg = _this.http + res.data
-								this.uploadimg = res.data
+								this.userinfo.userimg = res.data
+								this.uploadimg = _this.http + '/' + res.data
 							}
 						});
 					}
 				});
 			},
 			submituserinfo(){
-				console.log("data:::::")
-				console.log(this.userinfo.usid)
-				console.log(this.userinfo.userimg)
-				console.log(this.userinfo.username)
-				console.log(this.index)
-				console.log(this.userinfo.leaveword)
-				console.log(this.date)
-				console.log(new Date(this.date))
-				console.log("uploadimg")
-				console.log(this.uploadimg)
-				console.log("dataend")
 				let _this = this;
 				uni.request({
 					url: _this.http + '/PersonageController/putuserinfobyid.do',
@@ -101,16 +89,12 @@
 						username:this.userinfo.username,
 						usersex:this.index,
 						leaveword:this.userinfo.leaveword,
-						// userbirthday:this.date
 						userbirthday:new Date(this.date)
 					},
 					success: res => {
-						console.log("res:::::")
-						console.log(res)
-						// let taiy_list = JSON.parse(res.data.data)
+
 						if (res.data.msg == 'succeed') {
-							console.log("res:::::")
-							console.log(res)
+
 						} else if (res.data.msg == 'failure') {
 							uni.showModal({
 								title: '温馨提示',
@@ -123,7 +107,6 @@
 			},
 			getuserinfo(){
 				let _this = this;
-				console.log("sdf")
 				uni.request({
 					url: _this.http + '/PersonageController/getuserinfobyid.do',
 					method: 'POST',
@@ -137,13 +120,9 @@
 						let taiy_list = JSON.parse(res.data.data)
 						if (res.data.msg == 'succeed') {
 							this.userinfo=taiy_list
-							
+							this.uploadimg = _this.http + '/' +this.userinfo.userimg
 							this.date=this.userinfo.userbirthday
 							this.index=this.userinfo.usersex
-							console.log(this.date)
-							console.log("userinfo:::::")
-							console.log(this.index)
-							console.log(this.userinfo)
 						} else if (res.data.msg == 'failure') {
 							uni.showModal({
 								title: '温馨提示',
@@ -156,8 +135,6 @@
 			},
 			bindPickerChange: function(e) {
 				this.index = e.target.value
-				console.log("index")
-				console.log(this.index)
 			},
 			bindDateChange: function(e) {
 				var oDate1 = new Date(this.date1);
@@ -196,21 +173,7 @@
 				day = day > 9 ? day : '0' + day;
 				return `${year}-${month}-${day}`;
 			}
-			// ,transformDate(val){
-			// 	const date = new Date(val);
-			// 	let year = date.getFullYear();
-			// 	let month = date.getMonth() + 1;
-			// 	let day = date.getDate();
-				
-			// 	if (type === 'start') {
-			// 		year = year - 60;
-			// 	} else if (type === 'end') {
-			// 		year = year + 2;
-			// 	}
-			// 	month = month > 9 ? month : '0' + month;;
-			// 	day = day > 9 ? day : '0' + day;
-			// 	return `${year}-${month}-${day}`;
-			// }
+
 			,transformDate(value) {
 				var date = new Date(value);
 				var Y = date.getFullYear();
