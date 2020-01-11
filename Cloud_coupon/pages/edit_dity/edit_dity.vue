@@ -4,27 +4,27 @@
 			<view class="details_data">
 				<view class="datails_list">
 					<view>商品条码</view>
-					<input type="text" placeholder="请输入商品条码">
+					<input type="text" placeholder="请输入商品条码" v-model="offering.barcode">
 				</view>
 				<view class="datails_list">
 					<view>商品名称</view>
-					<input type="text" placeholder="请输入商品条码">
+					<input type="text" placeholder="请输入商品名称" v-model="offering.commodiname">
 				</view>
 				<view class="datails_list">
 					<view>规格型号</view>
-					<input type="text" placeholder="请输入商品条码">
+					<input type="text" placeholder="请输入规格型号" v-model="offering.standard">
 				</view>
 				<view class="datails_list">
 					<view>库存单位</view>
-					<input type="text" placeholder="请输入商品条码">
+					<input type="text" placeholder="请输入库存单位" v-model="offering.repertory">
 				</view>
 				<view class="datails_list">
 					<view>商品原价</view>
-					<input type="text" placeholder="请输入商品条码">
+					<input type="text" placeholder="请输入商品原价" v-model="offering.originalprice">
 				</view>
 				<view class="datails_list">
 					<view>商品折后价</view>
-					<input type="text" placeholder="请输入商品条码">
+					<input type="text" placeholder="请输入商品折后价" v-model="offering.currentprice">
 				</view>
 			</view>
 			<view class="datails_pic">
@@ -32,13 +32,13 @@
 				<view class="datails_sub" v-for="(item,index) in addpic" :key="index" v-if="Imglist">
 					<image :src="item" @longpress="deleteImage(index)"  data-index='index'></image>
 				</view>
-				<view class="datails_sub" @tap="Addimg" v-if="Piclist">
-					<image src="../../static/images/icon26.png"></image>
+				<view class="datails_sub" @tap="changeImg" v-if="Piclist">
+					<image :src="offerimg"></image>
 				</view>
 			</view>
 			<view class="btn_submit">
 				<view>放回仓库</view>
-				<view>立即上架</view>
+				<view >立即上架</view>
 			</view>
 		</view>
 	</view>
@@ -48,12 +48,106 @@
 	export default {
 		data() {
 			return {
+				offerimg:'',
+				offering:'',
 				Piclist:true,
 				Imglist:true,
 				addpic:[],
 			}	
 		},
+		onLoad() {
+			this.getoffering()
+		},
 		methods: {
+			submitoffering(){
+				let _this = this;
+				uni.request({
+					url: _this.http + '/MerchantController/putupdatemerchandise.do',
+					method: 'POST',
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					data: {
+						comdiid: this.offering.comdiid,
+						commodiname:this.offering.commodiname,
+						standard:this.offering.standard,
+						repertory:this.offering.repertory,
+						commodiimg:this.offering.commodiimg,
+						originalprice:this.offering.originalprice,
+						currentprice:this.offering.currentprice,
+						commdis:this.offering.commdis,
+						barcode:this.offering.barcode,
+						commodiremark:this.offering.commodiremark
+					},
+					success: res => {
+						console.log("res")
+						console.log(res)
+						if (res.data.msg == 'succeed') {
+						} else if (res.data.msg == 'failure') {
+							uni.showModal({
+								title: '温馨提示',
+								content: '暂无数据',
+								showCancel: false
+							});
+						}
+					}
+				})
+			},
+			changeImg() {
+				let _this = this;
+				uni.chooseImage({
+					success: (chooseImageRes) => {
+						const tempFilePaths = chooseImageRes.tempFilePaths;
+						this.changeimg = tempFilePaths[0] 
+						uni.uploadFile({
+							url: _this.http + '/pload/pictureUpLoad.do', 
+							filePath: tempFilePaths[0],
+							name: 'file',
+							success: (res) => {
+								this.offering.commodiimg = res.data
+								this.offerimg = _this.http + '/' + res.data
+								console.log("this.userimg")
+								console.log(this.offerimg)
+							}
+						});
+					}
+				});
+			},
+			getoffering(){
+				let _this = this;
+				uni.request({
+					url: _this.http + '/MerchantController/getontmerchand.do',
+					method: 'POST',
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					data: {
+						comdiid: uni.getStorageSync('comdiid')
+					},
+					success: res => {
+						// console.log("res")
+						console.log("res")
+						console.log(res)
+						let taiy_list = JSON.parse(res.data.data)
+						if (res.data.msg == 'succeed') {
+							this.offering=taiy_list
+							console.log("offering")
+							console.log(this.offering)
+							console.log("this.commodiimg")
+							console.log(this.offering.commodiimg)
+							this.offerimg = _this.http + '/' + this.offering.commodiimg
+							console.log("this.offerimg")
+							console.log(this.offerimg)
+						} else if (res.data.msg == 'failure') {
+							uni.showModal({
+								title: '温馨提示',
+								content: '暂无数据',
+								showCancel: false
+							});
+						}
+					}
+				})
+			},
 			Addimg:function(e){
 				uni.chooseImage({ 
 				    count: 1, //默认9
