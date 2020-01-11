@@ -27,10 +27,10 @@
 							<text>{{item.commodiname}}</text>
 						</view>
 						<image src="../../static/images/icon23.png" class="empty" @tap='deletes(index)'></image>
-						<view class="shop_couent" @tap="couent">
+						<view class="shop_couent" @tap="couent(item.comdiid)">
 							<view class="couent_pic">
-								<image src="../../static/images/pg1.png"></image>
-								<!-- <image :src="item.commodiimg"></image> -->
+								<!-- <image src="../../static/images/pg1.png"></image> -->
+								<image :src="item.commodiimg"></image>
 							</view>
 							<view class="text_el">
 								<textarea disabled="disabled" value="商品 描述 "></textarea>
@@ -166,7 +166,12 @@
 					},
 					success: res => {
 						let taiy_list = JSON.parse(res.data.data)
+						console.log("taiy_list")
+						console.log(taiy_list)
 						if (res.data.msg == 'succeed') {
+							for(var i=0;i<taiy_list.list.length;i++){
+								taiy_list.list[i].commodiimg = _this.http + '/' + taiy_list.list[i].commodiimg
+							}
 							if(this.page==1){
 								this.list=taiy_list.list
 							}else{
@@ -174,6 +179,7 @@
 									this.list.push(taiy_list.list[i])
 								}
 							}
+							
 						} else if (res.data.msg == 'failure') {
 							uni.showModal({
 								title: '温馨提示',
@@ -185,7 +191,10 @@
 				})
 				// this.codebtnlist=[];
 			},
-			couent: function() {
+			couent: function(comdiid) {
+				uni.setStorageSync('comdiid', comdiid);
+				console.log("comdiid")
+				console.log(comdiid)
 				uni.navigateTo({
 					url: '../edit_dity/edit_dity'
 				})
