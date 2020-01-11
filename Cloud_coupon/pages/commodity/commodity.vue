@@ -94,13 +94,17 @@
 					name: '删除',
 					pic: "../../static/images/icon23.png",
 					code:2
+				}, {
+					name: '添加',
+					pic: "../../static/images/icon23.png",
+					code:3
 				}],
 				codebtnlist:[]
 			}
 		},
 		onLoad() {
 			for(var i=0;i<this.btnList.length;i++){
-				if(i != 0){
+				if(i != 0 && i != 3){
 					this.codebtnlist.push(this.btnList[i])
 				}
 			}
@@ -111,8 +115,9 @@
 				var mycode = this.codebtnlist[val].code
 				console.log("mycode")
 				console.log(mycode)
-				
-				if(mycode == 2){
+				if(mycode == 3){
+					this.addoffer()
+				}else if(mycode == 2){
 					this.delisel(mycode)
 				}else {
 					let _this = this;
@@ -199,17 +204,23 @@
 					url: '../edit_dity/edit_dity'
 				})
 			},
+			addoffer: function() {
+				uni.navigateTo({
+					url: '../edit_dity/edit_dity'
+				})
+			},
 			btn_click: function(index) {
+				console.log(index)
 				this.codebtnlist=[];
 				if(index == 0){
 					for(var i=0;i<this.btnList.length;i++){
-						if(i != 0){
+						if(i != 0 && i != 3){
 							this.codebtnlist.push(this.btnList[i])
 						}
 					}
 				}else if(index == 1){
 					for(var i=0;i<this.btnList.length;i++){
-						if(i != 1){
+						if(i != 1 && i != 3){
 							this.codebtnlist.push(this.btnList[i])
 						}
 					}
