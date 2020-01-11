@@ -198,8 +198,6 @@
 			},
 			couent: function(comdiid) {
 				uni.setStorageSync('comdiid', comdiid);
-				console.log("comdiid")
-				console.log(comdiid)
 				uni.navigateTo({
 					url: '../edit_dity/edit_dity'
 				})
@@ -328,6 +326,12 @@
 								},
 								success: res => {
 									if (res.data.msg == 'succeed') {
+										for(var i=0;i<list.length;i++)
+										{
+											if(list[i].comdiid == that.list[index].comdiid){
+												list.splice(i,1);
+											}
+										}
 									} else if (res.data.msg == 'failure') {
 										uni.showModal({
 											title: '温馨提示',
@@ -348,6 +352,7 @@
 							console.log(that.piece)
 							console.log("that.list[]")
 							console.log(list[index])
+							console.log("sdf")
 							// 如果数据为空
 							if (!list.length) {
 								that.hasList = false
@@ -375,8 +380,10 @@
 					content: '确认清空购物车吗',
 					success: function(res) {
 						if (res.confirm) {
+							var mylist = [];
 							for(var i=0;i<that.offerlist.length;i++){
 								that.argumentlist.push(that.offerlist[i].comdiid)
+								mylist.push(that.offerlist[i].comdiid)
 							}
 							var param = JSON.stringify(that.argumentlist);
 							uni.request({
@@ -390,6 +397,14 @@
 								},
 								success: res => {
 									if (res.data.msg == 'succeed') {
+										for(var i=0;i<list.length;i++)
+										{
+											for(var j=0;j<mylist.length;j++){
+												if(list[i].comdiid == mylist[j]){
+													list.splice(i,1);
+												}
+											}
+										}
 									} else if (res.data.msg == 'failure') {
 										uni.showModal({
 											title: '温馨提示',
