@@ -5,7 +5,7 @@
 		</view>
 		<view class="center_box">
 			<view class="center_head">
-				<image :src="userinfo.userimg" @tap="jump_on"></image>
+				<image :src="userimg1" @tap="jump_on"></image>
 			</view>
 			<view class="center_mtion">
 				<view class="center_name">{{userinfo.username}}</view>
@@ -39,6 +39,7 @@
 	export default {
 		data() {
 			return {
+				userimg1:'',
 				userinfo:'',
 				unmber: [{
 					num: 0,
@@ -122,23 +123,17 @@
 						usid: 5
 					},
 					success: res => {
-						console.log("res::::")
-						console.log(res)
 						let taiy_list = JSON.parse(res.data.data)
-						console.log("taiy_list::::")
-						console.log(taiy_list)
 						if (res.data.msg == 'succeed') {
 							this.userinfo=taiy_list
+							this.userimg1=_this.http + '/' + this.userinfo.userimg
 							for(var i=0;i<this.unmber.length;i++){
 								if(this.unmber[i].name.trim() == '粉丝数'){
 									this.unmber[i].num = this.userinfo.userfans
 								}else if(this.unmber[i].name.trim() == '关注'){
 									this.unmber[i].num = this.userinfo.userattention
 								}
-								console.log(this.unmber[i].name.trim())
 							}
-							console.log("userinfo::::")
-							console.log(this.userinfo)
 						} else if (res.data.msg == 'failure') {
 							uni.showModal({
 								title: '温馨提示',

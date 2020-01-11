@@ -13,3 +13,6 @@
 .new_le view:nth-of-type(1){font-size: 0.9rem;font-weight: bold;width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
 .new_le view:nth-of-type(2){font-size: 0.7rem;color: #666666;}
 .new_ri{font-size: 0.9rem;font-weight: bold;padding: 10rpx 0;box-sizing: border-box;float: right;margin: 28rpx 0;}
+.defect{width: 100%;height: auto;overflow: hidden;}
+.defect image{width: 300rpx;height: 300rpx;margin: 100rpx auto 40rpx auto;display: block;}
+.defect text{display: block;font-size: 0.9rem;color: #868686;text-align: center;width: 100%;font-weight: bold;}

@@ -13,6 +13,10 @@
 				</view>
 			</view>
 		</view>
+		<view class="defect" v-show="defect_el">
+			<image v-if="https" :src="https+'/front_image/fault.png'"></image>
+			<text :defect_name='defect_name'>{{defect_name}}</text>
+		</view>
 		</scroll-view>
 	</view>
 </template>
@@ -27,6 +31,8 @@
 				collelist:[],
 				https:this.http,
 				pagenum:1,
+				defect_el: false,
+				defect_name: '还未使用卷',
 			}
 		},onLoad() {
 			this.getmygeneral();
@@ -79,11 +85,7 @@
 								collect_list.list[l].userinfo.leaveword = ""+year+'年'+month+'月'+day+'日'
 							}
 						}else if(res.data.msg == 'failure'){
-							uni.showModal({
-								title: '温馨提示',
-								content: '暂无数据',
-								showCancel: false
-							});
+							_this.defect_el = true
 						}
 					}
 				})

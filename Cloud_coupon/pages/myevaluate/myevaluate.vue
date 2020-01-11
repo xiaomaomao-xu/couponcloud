@@ -23,12 +23,16 @@
 					<text>优惠:{{item.grade}}星</text>
 				</view>
 				<view>{{item.storereview}}</view>
-				<view class="eval_bus">
+				<view class="eval_bus" @click="dianji(index)">
 					<image v-if="https" :src="https+'/'+item.storeinfo.obligatestrone"></image>
 					<view>{{item.storeinfo.storename}}</view>
 					<image src="../../static/images/icon13.png"></image>
 				</view>
 			</view>
+		</view>
+		<view class="defect" v-show="defect_el">
+			<image v-if="https" :src="https+'/front_image/fault.png'"></image>
+			<text :defect_name='defect_name'>{{defect_name}}</text>
 		</view>
 		</scroll-view>
 	</view>
@@ -43,6 +47,8 @@
 				collelist:[],
 				https:this.http,
 				pagenum:1,
+				defect_el: false,
+				defect_name: '还未评价商店',
 				storegrou:[],
 				latitude: [{
 					pic: "../../static/images/icon15.png"
@@ -113,11 +119,7 @@
 							
 							
 						}else if(res.data.msg == 'failure'){
-							uni.showModal({
-								title: '温馨提示',
-								content: '暂无数据',
-								showCancel: false
-							});
+							_this.defect_el = true
 						}
 					}
 				})
@@ -130,9 +132,13 @@
 			lower(){
 				this.pagenum=this.pagenum+1;
 				if(this.pagenum <= this.pas){
-					console.log("下一页"+this.pagenum);
 					this.getmypinlun();
 				}
+			},dianji(index){
+				let stid = this.collelist[index].storeid;
+				uni.navigateTo({
+					url: "../merchant/merchant?id="+stid
+				})
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 <template>
 	<view style="position: absolute;top: 0;bottom: 0;width: 100%;left: 0;background: white;height: auto;overflow: scroll;">
 		<scroll-view class="cart_list"  scroll-y="true" @scrolltolower="lower" style="height:100% ;">
-		<view class="collect"  v-for="(item,index) in collelist" :key = 'index'>
+		<view class="collect"  v-for="(item,index) in collelist" :key = 'index' @click="dianji(index)">
 			<view class="collect_le">
 				<image v-if="https" :src="https+'/'+item.storeinfo.obligatestrone"></image>
 			</view>
@@ -20,6 +20,10 @@
 				<view class="collect_res">{{item.storeinfo.storeaddress}}</view>
 			</view>
 		</view>
+		<view class="defect" v-show="defect_el">
+			<image v-if="https" :src="https+'/front_image/fault.png'"></image>
+			<text :defect_name='defect_name'>{{defect_name}}</text>
+		</view>
 		</scroll-view>
 	</view>
 </template>
@@ -31,12 +35,14 @@
 			return {
 				pas:1,
 				pbs:1,
+				defect_el: false,
 				collelist:[],
 				https:this.http,
 				key: '6ffbe58a99e0487a6012276570256325',
 				latitude:'',
 				longitude:'',
 				pagenum:1,
+				defect_name: '还未收藏店铺',
 			}
 		},onLoad() {
 			this.getiddress();
@@ -92,24 +98,40 @@
 							}
 							this.pas = a
 							
-							
 							if(this.pagenum==1){
 								this.collelist=collect_list.list
-								console.log(this.collelist)
 							}else{
 								if(this.pagenum <= a){
 									for(var l = 0; l < collect_list.list.length; l++){
 										this.collelist.push(collect_list.list[l])
 									}
 								}
-								
 							}
+							for (var l = 0; l < collect_list.list.length; l++) {
+								let voucher_time = new Date(collect_list.list[l].createtime)
+								let year=voucher_time.getFullYear();
+							    let month=voucher_time.getMonth()+1; 
+							    let day=voucher_time.getDate(); 
+								collect_list.list[l].cochaddress = ""+year+'年'+month+'月'+day+'日'
+							}
+							
+							console.log(collect_list.list)
+							for (var l = 0; l < collect_list.list.length; l++) {
+								let creatdates=collect_list.list[l].createtime
+								let date = new Date();
+								let chadate=date - creatdates;
+								let tian = parseInt((chadate % (1000 * 3600 *3600  )) / (1000 * 60 * 60 *24));
+								let hour = parseInt((chadate % (1000 * 3600 *3600 )) / (1000 * 60 * 60));
+								console.log(tian+"天--"+hour+"小时")
+								console.log(chadate)
+								console.log("你好");
+							}
+							
+							
+							
+							
 						}else if(res.data.msg == 'failure'){
-							uni.showModal({
-								title: '温馨提示',
-								content: '暂无数据',
-								showCancel: false
-							});
+							_this.defect_el = true
 						}
 					}
 				})
@@ -119,6 +141,11 @@
 				if(this.pagenum <= this.pas){
 					this.getmypinlun();
 				}
+			},dianji(index){
+				let stid = this.collelist[index].storeid;
+				uni.navigateTo({
+					url: "../merchant/merchant?id="+stid
+				})
 			}
 		}
 	}
