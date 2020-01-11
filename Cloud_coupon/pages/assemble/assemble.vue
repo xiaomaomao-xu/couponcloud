@@ -79,6 +79,13 @@
 				pularity:[],
 			}
 		},
+		onLoad(){
+			console.log( uni.getStorageSync("district"));
+			this.district = uni.getStorageSync("district")
+			this.getlesaleinfo()
+			this.gettaiyinfo()
+			this.getwholestinfo()
+		},
 		methods: {
 			changeIndex(index){
 				this.activeindex = index
@@ -94,13 +101,6 @@
 			},
 			url_pic(){
 				console.log(this.image_url)
-			},
-			onLoad(){
-				console.log( uni.getStorageSync("district"));
-				this.district = uni.getStorageSync("district")
-				this.getlesaleinfo()
-				this.gettaiyinfo()
-				this.getwholestinfo()
 			},
 			//头部轮播广告
 			gettaiyinfo(){

@@ -90,22 +90,50 @@
 		data() {
 			return{
 				indicatorDots: true,
-		      	imgbox:[{
-					pic:'../../static/images/bg.png'
-				},{
-					pic:'../../static/images/bg.png'
-				},{
-					pic:'../../static/images/bg.png'
-				},{
-					pic:'../../static/images/bg.png'
-				},{
-					pic:'../../static/images/bg.png'
-				},{
-					pic:'../../static/images/bg.png'
-				}]
+		      	imgbox:[],
 			}
 		},
+		onLoad(){
+			this.district = uni.getStorageSync("district")
+			this.gettaiyinfo()
+		},
 		methods: {	
+			//头部轮播广告
+			gettaiyinfo(){
+				let _this = this;
+				uni.request({
+					url: _this.http + '/AdverrecordController/gettaiyakiadverrecord.do',
+					method: 'POST',
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					data: {
+						advertypeid: 5,
+						district: _this.district
+					},
+					success: res => {
+						console.log(res)
+						if (res.data.msg == 'succeed') {
+							let taiy_list = JSON.parse(res.data.data)
+							console.log(taiy_list)
+							for (let k = 0; k < taiy_list.length; k++) {
+								_this.imgbox.push({
+									pic:_this.http + '/' +taiy_list[k].adverimg,
+								})
+								_this.image_url.push({
+									url:taiy_list[k].adverhare
+								})
+							}
+						} else if (res.data.msg == 'failure') {
+							uni.showModal({
+								title: '温馨提示',
+								content: '暂无数据',
+								showCancel: false
+							});
+						}
+					}
+				})
+			},
 			details:function(){
 				uni.navigateTo({
 					url:'../film_details/film_details'

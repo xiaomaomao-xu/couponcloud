@@ -188,8 +188,10 @@
 						storeid: _this.id,
 					},
 					success: res => {
+						console.log(res)
 						let taiy_list = JSON.parse(res.data.data)
 						if (res.data.msg == 'succeed') {
+							console.log(taiy_list)
 							_this.pages = taiy_list.pages
 							_this.pagesize = taiy_list.pageSize
 							for (let k = 0; k < taiy_list.list.length; k++) {
@@ -221,8 +223,10 @@
 						storeid: _this.id,
 					},
 					success: res => {
+						console.log(res)
 						let voucher_list = JSON.parse(res.data.data)
 						if (res.data.msg == 'succeed') {
+							console.log(voucher_list)
 							for (let n = 0; n < voucher_list.list.length; n++) {
 								let voucher_time = new Date(voucher_list.list[n].createtime)
 								let year = voucher_time.getFullYear();
@@ -254,8 +258,10 @@
 						storeid: _this.id,
 					},
 					success: res => {
+						console.log(res)
 						let viewlist = JSON.parse(res.data.data)
 						if (res.data.msg == 'succeed') {
+							console.log(viewlist)
 							for (let l = 0; l < viewlist.list.length; l++) {
 								let view_time = new Date(viewlist.list[l].createtime)
 								let year = view_time.getFullYear();
@@ -297,21 +303,31 @@
 					this.show1 = true
 					this.show2 = false
 					this.show3 = false
+					this.defect_el = false
 					this.defect_name = '该商家还没有商品哦！亲'
+					console.log(this.dity_list)
+					this.dity_list.splice(0,this.dity_list.length)
+					this.pagenum = 1
 					this.getstoreinfo()
 				}
 				if (index == 1) {
 					this.show1 = false
 					this.show2 = true
 					this.show3 = false
+					this.defect_el = false
 					this.defect_name = '该商家还没有优惠券！敬请期待'
+					this.voucher.splice(0,this.voucher.length)
+					this.pagenum = 1
 					this.getmerchantinfo()
 				}
 				if (index == 2) {
 					this.show1 = false
 					this.show2 = false
 					this.show3 = true
+					this.defect_el = false
 					this.defect_name = '该商家暂未评价'
+				    this.viewlist.splice(0,this.viewlist.length)
+					this.pagenum = 1
 					this.getviewlistinfo()
 				}
 			},
@@ -353,8 +369,6 @@
 				this.HN_top = (offY + ty) + 'px'
 			},
 			handletouchend: function(event) {
-				console.log(event.changedTouches[0].pageY)
-				console.log(this.lastY)
 				//下拉
 				if (event.changedTouches[0].pageY - this.lastY > 0) {
 					let _this = this;

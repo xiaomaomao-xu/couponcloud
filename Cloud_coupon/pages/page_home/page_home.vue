@@ -175,6 +175,7 @@
 				currentIndex: 0,
 				defaultVal: [],
 				https: this.http,
+				guaid:0,
 			}
 		},
 		onLoad() {
@@ -394,9 +395,36 @@
 			order_le: function(methodsWords) {
 				this[methodsWords]()
 			},
+			//判断活动是否开启
 			scratch() {
-				uni.navigateTo({
-					url: '../scratch/scratch'
+				let _this = this;
+				uni.request({
+					url: _this.http + '/ActivrecordController/getgoonguagua.do',
+					method: 'POST',
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					data:{
+						guaawardaddress:_this.district
+					},
+					success: res => {
+						console.log(res)
+						if (res.data.msg == 'succeed') {
+							let usid_el = JSON.parse(res.data.data)
+							console.log(usid_el)
+							_this.guaid = usid_el.guaid
+							let guaid = _this.guaid
+							uni.navigateTo({
+								url: "../scratch/scratch?gid="+guaid
+							})
+						} else if (res.data.msg == 'failure') {
+							uni.showModal({
+								title: '温馨提示',
+								content: '活动暂未开启',
+								showCancel: false
+							});
+						}
+					}
 				})
 			},
 			seckill() {
