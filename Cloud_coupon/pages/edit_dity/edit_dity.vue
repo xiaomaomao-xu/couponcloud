@@ -36,9 +36,12 @@
 					<image :src="offerimg"></image>
 				</view>
 			</view>
-			<view class="btn_submit">
-				<view>放回仓库</view>
-				<view >立即上架</view>
+			<view class="btn_submit" v-if="flag">
+				<view @click="submitoffering(2)">放回仓库</view>
+				<view @click="submitoffering(0)">立即上架</view>
+			</view>
+			<view class="btn_submit1" v-if="!flag">
+				<view @click="addoffering">添加到仓库</view>
 			</view>
 		</view>
 	</view>
@@ -48,18 +51,77 @@
 	export default {
 		data() {
 			return {
+				offeringid:'',
+				flag:false,
 				offerimg:'',
-				offering:'',
+				offering:{
+					comdiid:0,
+					storeid:0,
+					commodityid:0,
+					commodiname:'',
+					standard:'',
+					repertory:0,
+					commodiimg:'',
+					originalprice:0,
+					currentprice:0,
+					commdis:0,
+					barcode:'',
+					commodistart:0,
+					commodiremark:'',
+					commodiaudit:'',
+					auditremark:'',
+					obligatestrone:'',
+					obligateintone:0
+				},
 				Piclist:true,
 				Imglist:true,
 				addpic:[],
 			}	
 		},
 		onLoad() {
-			this.getoffering()
+			this.offeringid=uni.getStorageSync('comdiid')
+			if(this.offeringid){
+				this.flag = true
+			}
+			if(this.flag){
+				this.getoffering()
+				uni.setStorageSync('comdiid','')
+			}
 		},
 		methods: {
-			submitoffering(){
+			addoffering(){
+				let _this = this;
+				uni.request({
+					url: _this.http + '/MerchantController/putaddmerchandise.do',
+					method: 'POST',
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					data: {
+						storeid: uni.getStorageSync('storeid'),
+						commodiname:this.offering.commodiname,
+						standard:this.offering.standard,
+						repertory:this.offering.repertory,
+						commodiimg:this.offering.commodiimg,
+						originalprice:this.offering.originalprice,
+						currentprice:this.offering.currentprice,
+						commdis:this.offering.commdis,
+						barcode:this.offering.barcode,
+						commodiremark:this.offering.commodiremark
+					},
+					success: res => {
+						if (res.data.msg == 'succeed') {
+						} else if (res.data.msg == 'failure') {
+							uni.showModal({
+								title: '温馨提示',
+								content: '暂无数据',
+								showCancel: false
+							});
+						}
+					}
+				})
+			},
+			submitoffering(val){
 				let _this = this;
 				uni.request({
 					url: _this.http + '/MerchantController/putupdatemerchandise.do',
@@ -77,11 +139,10 @@
 						currentprice:this.offering.currentprice,
 						commdis:this.offering.commdis,
 						barcode:this.offering.barcode,
-						commodiremark:this.offering.commodiremark
+						commodiremark:this.offering.commodiremark,
+						commodistart:val
 					},
 					success: res => {
-						console.log("res")
-						console.log(res)
 						if (res.data.msg == 'succeed') {
 						} else if (res.data.msg == 'failure') {
 							uni.showModal({
@@ -106,8 +167,6 @@
 							success: (res) => {
 								this.offering.commodiimg = res.data
 								this.offerimg = _this.http + '/' + res.data
-								console.log("this.userimg")
-								console.log(this.offerimg)
 							}
 						});
 					}
@@ -125,19 +184,10 @@
 						comdiid: uni.getStorageSync('comdiid')
 					},
 					success: res => {
-						// console.log("res")
-						console.log("res")
-						console.log(res)
 						let taiy_list = JSON.parse(res.data.data)
 						if (res.data.msg == 'succeed') {
 							this.offering=taiy_list
-							console.log("offering")
-							console.log(this.offering)
-							console.log("this.commodiimg")
-							console.log(this.offering.commodiimg)
 							this.offerimg = _this.http + '/' + this.offering.commodiimg
-							console.log("this.offerimg")
-							console.log(this.offerimg)
 						} else if (res.data.msg == 'failure') {
 							uni.showModal({
 								title: '温馨提示',
