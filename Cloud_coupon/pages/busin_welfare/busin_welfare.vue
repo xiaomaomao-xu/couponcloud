@@ -22,12 +22,43 @@
 	export default {
 		data() {
 			return {
-				
+				storeweifare:''
 				
 			}
 		},
+		onLoad() {
+			this.getmerchantweifare()
+		},
 		methods: {
-
+			getmerchantweifare(){
+				let _this = this;
+				uni.request({
+					url: _this.http + '/MerchantController/getmerchantweifare.do',
+					method: 'POST',
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					data: {
+						stid: uni.getStorageSync('storeid')
+					},
+					success: res => {
+						// let taiy_list = JSON.parse(res.data.data)
+						console.log("res")
+						console.log(res)
+						if (res.data.msg == 'rester') {
+							this.storeweifare=taiy_list
+							console.log("this.storeweifare:::")
+							console.log(this.storeweifare)
+						} else if (res.data.msg == 'failure') {
+							uni.showModal({
+								title: '温馨提示',
+								content: '暂无数据',
+								showCancel: false
+							});
+						}
+					}
+				})
+			}
 		}
 	}
 </script>
