@@ -45,15 +45,15 @@
 				</view>
 				<view class="datails_list">
 					<view>商家类型<text>*</text></view>
-					<picker @change="bindPickerChange" :value="index" :range="array">
-						<view class="uni-input">{{array[index]}}</view>
+					<picker @change="bindPickerChange" :value="index" :range="shopingtype">
+						<view class="uni-input">{{shopingtype[index]}}</view>
 						<image src="../../static/images/icon13.png"></image>
 					</picker>
 				</view>
 				<view class="datails_list">
 					<view>区域选择<text>*</text></view>
-					<picker @change="bindPickerChange" :value="index" :range="array">
-						<view class="uni-input">{{array[index]}}</view>
+					<picker @change="bindPickerChange" :value="index" :range="address">
+						<view class="uni-input">{{shopingtype[index]}}</view>
 						<image src="../../static/images/icon13.png"></image>
 					</picker>
 				</view>
@@ -182,8 +182,13 @@
 				Imglist:true,
 				addpic:[],
 				array: ['男', '女'],
+				shopingtype:[],
+				address:[],
 				index: 0,
 			}	
+		},onLoad(option) {
+			this.getshopinfo(),
+			this.getaddress()
 		},
 		methods: {
 			bindPickerChange: function(e) {
@@ -216,7 +221,56 @@
 						}
 					}
 				})
+			},getshopinfo() {
+				let _this = this;
+				uni.request({
+					url: _this.http + '/MerchantbgController/getallshoptype.do',
+					method: 'POST',
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					data: {
+						
+					},
+					success: res => {
+						if (res.data.msg == 'succeed') {
+							let collect_list = JSON.parse(res.data.data)
+							for(var i=0;i<collect_list.length;i++){
+								this.shopingtype.push(collect_list[i].sttyname)
+								console.log(this.shopingtype)
+							}
+							
+							
+						} else if (res.data.msg == 'failure') {
+							_this.defect_el = true
+						}
+					}
+				})
+			},getaddress() {
+				let _this = this;
+				uni.request({
+					url: _this.http + '/regionController/getregiontolist.do',
+					method: 'POST',
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					data: {
+						
+					},
+					success: res => {
+						if (res.data.msg == 'succeed') {
+							let collect_list = JSON.parse(res.data.data)
+							console.log(collect_list)
+							this.address=collect_list
+						} else if (res.data.msg == 'failure') {
+							_this.defect_el = true
+						}
+					}
+				})
 			}
+			
+			
+			
 		}
 	}
 </script>

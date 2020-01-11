@@ -31,6 +31,10 @@
 				</view>
 			</view>
 		</view>
+		<view class="defect" v-show="defect_el">
+			<image v-if="https" :src="https+'/front_image/fault.png'"></image>
+			<text :defect_name='defect_name'>{{defect_name}}</text>
+		</view>
 		</scroll-view>
 	</view>
 </template>
@@ -49,6 +53,8 @@
 				result:{},
 				pas:1,
 				pbs:1,
+				defect_el: false,
+				defect_name: '还未使用卷',
 			}
 		},
 		onLoad() {
@@ -258,9 +264,9 @@
 								}
 								
 							}
-							console.log(this.collelist)
 						}else if(res.data.msg == 'failure'){
 							clearInterval(_this.timer)
+							_this.defect_el = true
 						}
 					}
 				})
