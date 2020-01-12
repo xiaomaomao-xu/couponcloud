@@ -184,12 +184,12 @@
 															orderid:res.data.data,
 															approvetypeid:this.approvertype.aptyid
 														},
-														success: res1 => {
-															console.log("res1")
-															console.log(res1)
-															if (res1.data.msg == 'succeed') {
+														success: res2 => {
+															console.log("res2")
+															console.log(res2)
+															if (res2.data.msg == 'succeed') {
 																
-															} else if (res1.data.msg == 'failure') {
+															} else if (res2.data.msg == 'failure') {
 																uni.showModal({
 																	title: '温馨提示',
 																	content: '暂无数据',
