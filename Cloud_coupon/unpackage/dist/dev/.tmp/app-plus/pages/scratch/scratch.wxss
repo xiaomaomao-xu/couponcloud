@@ -9,24 +9,39 @@
 .image_list7{width: 70.5%;top: 19.4%;left: 18%;height: 7%;}
 .scra_center{position: absolute;width: 85.5%;left: 7.3%;height: 20%;top: 30.5%;}
 .scra_center>image{width: 100%;height: 100%;}
-.center_el{position: absolute;top: 0;left: 0;width: 100%;height: 100%;padding: 30rpx 0;box-sizing: border-box;}
+.center_el{position: absolute;top: 0;left: 0;width: 100%;height: 100%;padding: 30rpx 0;-webkit-box-sizing: border-box;box-sizing: border-box;}
 .scra_title{width: 100%;font-size: 0.9rem;font-weight: bold;color: #000000;text-align: center;}
 .scra_title text{color: red;}
 .scra_btn{width: 50%;color: white;background: red;font-size: 0.8rem;text-align: center;height: 60rpx;line-height: 60rpx;margin: 20rpx 25%;}
 .scra_botm{width: 100%;font-size: 0.7rem;color: #666666;text-align: center;}
 .scra_botm text{color: red;}
-.prize{width: 90%;position: absolute;top: 52%;left: 5%;height: auto;box-sizing: border-box;}
+.prize{width: 90%;position: absolute;top: 52%;left: 5%;height: auto;-webkit-box-sizing: border-box;box-sizing: border-box;}
 .prize_title{width: 100%;font-size: 1.2rem;font-weight: bold;height: 100rpx;}
 .prize_title>view:nth-of-type(1),.prize_title>view:nth-of-type(3){width: 33%;height: 100%;float: left;}
 .prize_title>view:nth-of-type(1) view{width: 60%;height: 4rpx;background: #000000;margin: 48rpx 0 48rpx 40%;}
 .prize_title>view:nth-of-type(3) view{width: 60%;height: 4rpx;background: #000000;margin: 48rpx 40% 48rpx 0;}
 .prize_title>view:nth-of-type(2){width: 33%;text-align: center;line-height: 100rpx;height: 100rpx;float: left;}
-.prize_center{width: 100%;height: auto;overflow: hidden;}
+.prize_center{width: 100%;height: 250rpx;overflow: hidden;border-radius: 10rpx;overflow: hidden;}
 .prize_center image{width: 100%;height: 250rpx;}
-.auth_data{width: 95%;margin: 20rpx 2.5%;background: white;border-radius: 10rpx;font-size: 0.8rem;height: 180rpx;overflow: hidden;line-height: 100rpx;padding: 40rpx 20rpx;box-sizing: border-box;}
+.prize_el{position: absolute;top: 0;bottom: 0;width: 100%;background: rgba(0,0,0,0.5);}
+.prize_tc{width: 80%;height: 450rpx;overflow: hidden;position: absolute;top: 50%;left: 50%;-webkit-transform: translate(-50%,-50%);-ms-transform: translate(-50%,-50%);transform: translate(-50%,-50%);}
+.prize_tc image:first-child{width: 40rpx;height: 40rpx;position: absolute;right: 20rpx;top: 20rpx;z-index: 999;}
+.prize_tc image:nth-of-type(2){width: 100%;height: 100%;position: absolute;top:0;left: 0;}
+.auth_data{width: 95%;margin: 20rpx 2.5%;background: white;border-radius: 10rpx;font-size: 0.8rem;height: 180rpx;overflow: hidden;line-height: 100rpx;padding: 40rpx 20rpx;-webkit-box-sizing: border-box;box-sizing: border-box;}
 .auth_data image{width: 100rpx;height: 100rpx;float: left;border-radius: 50%;}
 .auth_data text:nth-of-type(1){float: left;margin-left: 20rpx;}
-.auth_data text:nth-of-type(2){float: right ;}
+.auth_data text:nth-of-type(2){float: right;}
+.user_image{width: 100%;position: relative;color: white;}
+.user_image image{width: 100%;height: 100%;position: absolute;top: 0;left: 0;}
+.user_le{position: absolute;left: 0;width: 70%;height: 100%;padding: 60rpx 0 60rpx 40rpx;-webkit-box-sizing: border-box;box-sizing: border-box;}
+.user_le view:nth-of-type(1){font-size: 1.4rem;font-weight: bold;margin-bottom: 40rpx;}
+.user_le view:nth-of-type(2){font-size: 0.6rem;}
+.user_ri{position: absolute;right: 0;width: 30%;height: 100%;font-size: 0.9rem;font-weight: bold;line-height: 250rpx;text-align: center;}
+.btn_tcel{position: absolute;bottom: 20rpx;height: auto;width: 100%;left: 0;}
+.btn_tcel view:first-child{font-size: 0.8rem;color: white;text-align: center;margin-bottom: 10rpx;}
+.btn_tcel view:first-child text{font-size: 0.9rem;color: #fffd00;font-weight: bold;}
+.btn_tcel view:nth-of-type(2){display: -webkit-box;display: -webkit-flex;display: -ms-flexbox;display: flex;}
+.btn_tcel view:nth-of-type(2) text{font-size: 0.8rem;color: red;background: #fdf0dd;border-radius: 10rpx;padding: 5rpx 20rpx;-webkit-box-sizing: border-box;box-sizing: border-box;display: block;margin: 0 auto;}
 .translatesUpDown{
     -webkit-animation-name:translatesUpDown;
             animation-name:translatesUpDown;
@@ -168,7 +183,8 @@ from, 20%, 53%, 80%, to {
   -webkit-animation-name: bounce;
   animation-name: bounce;
   -webkit-transform-origin: center bottom;
-  transform-origin: center bottom;
+  -ms-transform-origin: center bottom;
+      transform-origin: center bottom;
 }
 @-webkit-keyframes flash {
 from, 50%, to {
@@ -423,7 +439,8 @@ to {
 }
 .swing {
   -webkit-transform-origin: top center;
-  transform-origin: top center;
+  -ms-transform-origin: top center;
+      transform-origin: top center;
   -webkit-animation-name: swing;
   animation-name: swing;
 }
@@ -612,7 +629,8 @@ from, 11.1%, to {
   -webkit-animation-name: jello;
   animation-name: jello;
   -webkit-transform-origin: center;
-  transform-origin: center;
+  -ms-transform-origin: center;
+      transform-origin: center;
 }
 @-webkit-keyframes bounceIn {
 from, 20%, 40%, 60%, 80%, to {

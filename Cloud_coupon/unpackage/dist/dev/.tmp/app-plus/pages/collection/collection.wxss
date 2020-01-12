@@ -1,13 +1,16 @@
-.collect{width: 90%;margin: 0 5%;border-bottom: 1px solid #EAEAEA;height: auto;overflow: hidden;padding: 20rpx 0;box-sizing: border-box;}
+.collect{width: 90%;margin: 0 5%;border-bottom: 1px solid #EAEAEA;height: auto;overflow: hidden;padding: 20rpx 0;-webkit-box-sizing: border-box;box-sizing: border-box;}
 .collect_le{width: 35%;float: left;height: auto;overflow: hidden;}
 .collect_le image{width: 200rpx;height: 200rpx;}
 .collect_ri{width: 65%;float: right;height: auto;overflow: hidden;}
-.collect_ri >view{height: auto;overflow: hidden;padding: 5rpx 20rpx;box-sizing: border-box;}
+.collect_ri >view{height: auto;overflow: hidden;padding: 5rpx 20rpx;-webkit-box-sizing: border-box;box-sizing: border-box;}
 .collect_add{font-size: 0.7rem;}
 .collect_add text{display: block;}
 .collect_add text:nth-of-type(2){float: right;}
-.collect_add text:nth-of-type(1){font-size: 0.9rem;font-weight: bold;width: 70%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;float: left;}
+.collect_add text:nth-of-type(1){font-size: 0.9rem;font-weight: bold;width: 70%;overflow: hidden;-o-text-overflow: ellipsis;text-overflow: ellipsis;white-space: nowrap;float: left;}
 .collect_stars image{width: 30rpx;height: 30rpx;float: left;}
 .collect_sales{font-size: 0.8rem;color: #eb6100;}
 .collect_res{font-size: 0.8rem;}
+.defect{width: 100%;height: auto;overflow: hidden;}
+.defect image{width: 300rpx;height: 300rpx;margin: 100rpx auto 40rpx auto;display: block;}
+.defect text{display: block;font-size: 0.9rem;color: #868686;text-align: center;width: 100%;font-weight: bold;}
 

@@ -1,7 +1,7 @@
 .post_cent{width: 90%;height: auto;overflow: hidden;margin: 0 5%;}
 .post_titile{width: 100%;height: auto;overflow: hidden;}
 .post_titile>image{width: 100rpx;height: 100rpx;float: left;border-radius: 50%;margin: 15rpx 0;}
-.post_new{width: 85%;float: right;height: 130rpx;box-sizing: border-box;padding: 15rpx;box-sizing: border-box;}
+.post_new{width: 85%;float: right;height: 130rpx;-webkit-box-sizing: border-box;box-sizing: border-box;padding: 15rpx;box-sizing: border-box;}
 .post_new>view{display: block;width: 100%;height: auto;overflow: hidden;}
 .new_le view{width: auto;float: left;}
 .new_le view:nth-of-type(1){font-size: 0.9rem;}
@@ -9,7 +9,7 @@
 .new_le image{width: 30rpx;height: 30rpx;float: right;margin-top: 10rpx;}
 .new_ri{width: 100%;font-size: 0.8rem;color: #707070;}
 .center_box{width: 100%;height: auto;overflow: hidden;}
-.center_el{width: 100%;height: 120rpx;overflow: hidden;box-sizing: border-box;font-size: 0.8rem;clear: both;}
+.center_el{width: 100%;height: 120rpx;overflow: hidden;-webkit-box-sizing: border-box;box-sizing: border-box;font-size: 0.8rem;clear: both;}
 .center_box view:nth-of-type(2){font-size: 0.8rem;color: #ed6a04;}
 .showall.active {
     height: auto;
@@ -19,7 +19,7 @@
 .image_box{width: 100%;height: auto;overflow: hidden;}
 .image_el{width: 33%;height: auto;overflow: hidden;float: left;margin: 20rpx 0 0 0;}
 .image_el image{width: 200rpx;height: 200rpx;}
-.icon_lcoation{width: 100%;height: auto;overflow: hidden;font-size: 0.8rem;color: #666666;padding: 0 10rpx;box-sizing: border-box;margin: 20rpx 0;}
+.icon_lcoation{width: 100%;height: auto;overflow: hidden;font-size: 0.8rem;color: #666666;padding: 0 10rpx;-webkit-box-sizing: border-box;box-sizing: border-box;margin: 20rpx 0;}
 .icon_lcoation image{width: 30rpx;height: 30rpx;margin-right: 20rpx;float: left;margin: 5rpx 0;}
 .icon_lcoation view{width: auto;float: left;}
 .comment{width: 100%;height: auto;overflow: hidden;font-size: 0.8rem;}

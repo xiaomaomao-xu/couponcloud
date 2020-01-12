@@ -1,6 +1,6 @@
-.details{width: 100%;height: auto;overflow: scroll;background: #F0F0F0;top: 0;bottom: 0;padding-bottom: 140rpx;box-sizing: border-box;}
+.details{width: 100%;height: auto;overflow: scroll;background: #F0F0F0;top: 0;bottom: 0;padding-bottom: 140rpx;-webkit-box-sizing: border-box;box-sizing: border-box;}
 .details_data{width: 100%;height: auto;overflow: hidden;margin-top: 20rpx;}
-.datails_list{width: 100%;height: 100rpx;line-height: 100rpx;border-bottom: 1px solid #EAEAEA;padding: 0 30rpx;box-sizing: border-box;background: white;}
+.datails_list{width: 100%;height: 100rpx;line-height: 100rpx;border-bottom: 1px solid #EAEAEA;padding: 0 30rpx;-webkit-box-sizing: border-box;box-sizing: border-box;background: white;}
 .datails_list>view{width: 30%;font-size: 0.8rem;color: #000000;height: 100%;float: left;}
 .datails_list input{width: 70%;height: 100%;font-size: 0.8rem;color: #000000;float: left;}
 .datails_list picker{width: 70%;height: 100%;font-size: 0.8rem;color: #000000;float: left;}
@@ -8,35 +8,35 @@
 .datails_list picker image{width: 40rpx;height: 40rpx;float: right;margin: 30rpx 0;}
 input::-webkit-input-placeholder{color: #606060;}
 .datails_list text{color: red;margin-left: 5rpx;}
-.datails_pic{width: 100%;height: auto;overflow: hidden;background: white;margin: 20rpx 0;padding: 30rpx;box-sizing: border-box;}
+.datails_pic{width: 100%;height: auto;overflow: hidden;background: white;margin: 20rpx 0;padding: 30rpx;-webkit-box-sizing: border-box;box-sizing: border-box;}
 .pic_title{font-size: 0.8rem;width: 100%;margin-bottom: 20rpx;}
 .pic_title text{color: red;}
 .datails_sub{width: 190rpx;height: 190rpx;margin: 20rpx 0;float: left;}
 .datails_sub image{width: 100%;height: 100%;}
 .btn_submit{width: 100%;height: 140rpx;overflow: hidden;position: fixed;bottom: 0;left: 0;background: white;border-top: 1rpx solid #EAEAEA;z-index: 999;}
 .btn_submit view{width: 80%;margin: 30rpx 10%;height: 80rpx;border-radius: 10rpx;text-align: center;line-height: 80rpx;font-size: 0.8rem;background: #EB6100;color: white;}
-.deta_list{width: 100%;height: auto;overflow: hidden;background: white;padding: 20rpx;box-sizing: border-box;}
+.deta_list{width: 100%;height: auto;overflow: hidden;background: white;padding: 20rpx;-webkit-box-sizing: border-box;box-sizing: border-box;}
 .list_name{width: 90%;height: 50rpx;margin: 0 5%;position: relative;}
-.list_name view{width: 100%;height: 10rpx;background: #eb6100;position: absolute;top: 50%;-webkit-transform: translateY(-50%);transform: translateY(-50%);}
+.list_name view{width: 100%;height: 10rpx;background: #eb6100;position: absolute;top: 50%;-webkit-transform: translateY(-50%);-ms-transform: translateY(-50%);transform: translateY(-50%);}
 .list_name text{display: block;width: 50rpx;height: 50rpx;border-radius: 50%;background: #EB6100;font-size: 0.8rem;color: white;text-align: center;line-height: 50rpx;}
 .list_name text:nth-of-type(1){position: absolute;left: 0;}
-.list_name text:nth-of-type(2){position: absolute;left: 50%;-webkit-transform: translateX(-50%);transform: translateX(-50%);}
+.list_name text:nth-of-type(2){position: absolute;left: 50%;-webkit-transform: translateX(-50%);-ms-transform: translateX(-50%);transform: translateX(-50%);}
 .list_name text:nth-of-type(3){position: absolute;right: 0;}
 .entry{width: 100%;height: 40rpx;overflow: hidden;margin-top: 20rpx}
 .entry text{display: block;font-size: 0.8rem;height: 40rpx;line-height: 40rpx;}
 .entry text:nth-of-type(1){position: absolute;left: 2.5%;}
-.entry text:nth-of-type(2){position: absolute;left: 50%;-webkit-transform: translateX(-50%);transform: translateX(-50%);}
+.entry text:nth-of-type(2){position: absolute;left: 50%;-webkit-transform: translateX(-50%);-ms-transform: translateX(-50%);transform: translateX(-50%);}
 .entry text:nth-of-type(3){position: absolute;right: 2.5%;}
-.explain{width: 100%;padding: 20rpx 30rpx;box-sizing: border-box;background: white;}
-.explain view{font-size: 0.8rem;padding: 20rpx 0;box-sizing: border-box;}
-.explain textarea{width: 100%;background: #f0f0f0;height: 300rpx;padding: 30rpx;box-sizing: border-box;font-size: 0.8rem;}
-.notes{width: 100%;padding: 20rpx;box-sizing: border-box;font-size: 0.8rem;color: red;}
-.passport{width: 100%;height: auto;padding: 20rpx 15rpx 40rpx 15rpx;box-sizing: border-box;overflow: hidden;background: white;}
-.pass_el{width: 100%;font-size: 0.8rem;color: #000000;height: auto;padding: 20rpx 15rpx;box-sizing: border-box;}
+.explain{width: 100%;padding: 20rpx 30rpx;-webkit-box-sizing: border-box;box-sizing: border-box;background: white;}
+.explain view{font-size: 0.8rem;padding: 20rpx 0;-webkit-box-sizing: border-box;box-sizing: border-box;}
+.explain textarea{width: 100%;background: #f0f0f0;height: 300rpx;padding: 30rpx;-webkit-box-sizing: border-box;box-sizing: border-box;font-size: 0.8rem;}
+.notes{width: 100%;padding: 20rpx;-webkit-box-sizing: border-box;box-sizing: border-box;font-size: 0.8rem;color: red;}
+.passport{width: 100%;height: auto;padding: 20rpx 15rpx 40rpx 15rpx;-webkit-box-sizing: border-box;box-sizing: border-box;overflow: hidden;background: white;}
+.pass_el{width: 100%;font-size: 0.8rem;color: #000000;height: auto;padding: 20rpx 15rpx;-webkit-box-sizing: border-box;box-sizing: border-box;}
 .pass_el text{color: red;margin-left: 5rpx;}
-.pass_list{width: 50%;height: auto;overflow: hidden;padding: 0 15rpx;box-sizing: border-box;float: left;}
+.pass_list{width: 50%;height: auto;overflow: hidden;padding: 0 15rpx;-webkit-box-sizing: border-box;box-sizing: border-box;float: left;}
 .port_pic{width: 100%;height: 200rpx;background: #666666;border-radius: 5rpx;}
 .port_pic image{width: 100%;height: 100%;}
-.port_name{font-size: 0.8rem;color: #666666;padding: 20rpx 0;box-sizing: border-box;text-align: center;}
-.port_btn{width: 80%;margin: 0 10%;background: #EB6100;color: white;font-size: 0.8rem;border-radius: 10rpx;padding: 10rpx 0;box-sizing: border-box;text-align: center;}
+.port_name{font-size: 0.8rem;color: #666666;padding: 20rpx 0;-webkit-box-sizing: border-box;box-sizing: border-box;text-align: center;}
+.port_btn{width: 80%;margin: 0 10%;background: #EB6100;color: white;font-size: 0.8rem;border-radius: 10rpx;padding: 10rpx 0;-webkit-box-sizing: border-box;box-sizing: border-box;text-align: center;}
 

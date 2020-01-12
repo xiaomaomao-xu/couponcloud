@@ -14,7 +14,8 @@
 				<image :src="https+'/front_image/gg6.png'"></image>
 				<view class="center_el animated" :class="{fadeOut:isFadeout == true}">
 					<view class="scra_title">你还有<text>{{num_el}}</text>次刮奖机会</view>
-					<view class="scra_btn" @tap="el_view">{{src_btn}}</view>
+					<button v-show='btn_oul' class="scra_btn" @click="fenxiang" open-type="share">{{src_btn}}</button>
+					<view v-show='btn_on' class="scra_btn" @tap="el_view">{{src_btn}}</view>
 					<view class="scra_botm">已有<text>{{sharenum}}</text>人参与刮奖</view>
 				</view>
 			</view>
@@ -53,6 +54,10 @@
 			<view class="prize_tc" v-show="secrch">
 				<image :src="https+'/front_image/icon16.png'" @tap="colse"></image>
 				<image src="../../static/images/ggtc.png"></image>
+				<view class="btn_tcel">
+					<view>成功获取<text>{{coupnamess}}</text></view>
+					<view><text>查看详情</text></view>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -62,6 +67,10 @@
 	export default {
 		data() {
 			return {
+				userinfo:[],
+				coupnamess:'优惠劵',
+				btn_on: false,
+				btn_oul: false,
 				https: this.http,
 				secrch: false,
 				title: 'Hello',
@@ -74,9 +83,11 @@
 				sharenum: 0,
 				num_el: 0,
 				src_btn: '',
+				starts: 0,
 			}
 		},
 		onLoad(open) {
+			this.userinfo = uni.getStorageSync('userinfo');
 			this.gid = open.gid
 			this.district = uni.getStorageSync("district")
 			this.getbilityinfo()
@@ -136,7 +147,9 @@
 					success: res => {
 						if (res.data.msg == 'succeed') {
 							let ward_list = JSON.parse(res.data.data)
+							console.log("进入中奖名单")
 							console.log(ward_list)
+							//this.sharenum=ward_list.length
 							for (let i = 0; i < ward_list.length; i++) {
 								//获取当前时间戳
 								let timestamp = (new Date()).getTime();
@@ -157,7 +170,7 @@
 								if (minu > 0 && hour > 0 && day > 0) {
 									_this.time = day + '天之前'
 								}
-								_this.msg.push({
+								this.msg.push({
 									pic: _this.http + '/' + ward_list[i].userinfo.userimg,
 									name: ward_list[i].userinfo.username,
 									num: _this.time
@@ -185,57 +198,168 @@
 					data: {
 						guaawardaddress: _this.district,
 						guaguaid: _this.gid,
-						userid: 1
+						userid: 5
 					},
 					success: res => {
 						let bility = JSON.parse(res.data.data)
 						console.log(res.data.msg)
-						_this.sharenum = bility.sharenum
-						_this.num_el = bility.tombstone
-						_this.src_btn = '立即刮奖'
+						if (res.data.msg == 'succeed') {
+							this.num_el = 1
+							this.starts = 0
+							 _this.sharenum = bility.sharenum
+							_this.src_btn = '立即刮奖'
+							this.btn_on = true
+							this.btn_oul = false
+						} else if (res.data.msg == 'abnormal') {
+							this.num_el = 0
+							this.starts = 1
+							_this.src_btn = '去分享'
+							this.btn_oul = true
+							this.btn_on = false
+							_this.sharenum = bility.sharenum
+						} else if (res.data.msg == 'rester') {
+							this.num_el = 1
+							this.starts = 0
+							_this.src_btn = '立即刮奖'
+							this.btn_oul = false
+							this.btn_on = true
+							_this.sharenum = bility.sharenum
+						} else {
+							this.num_el = 0
+							this.starts = 0
+							_this.sharenum = bility.sharenum
+							_this.src_btn = '明日再来'
+							this.btn_oul = false
+							this.btn_on = true
+						}
+
+						
 					}
 				})
 			},
 			//点击抽奖
 			el_view: function() {
-				// this.isFadeout = !this.isFadeout
+				console.log()
+				if (this.starts == 0) {
+					//可抽奖
+					// this.isFadeout = !this.isFadeout
+					let _this = this;
+					uni.request({
+						url: _this.http + '/ActivrecordController/putlatombola.do',
+						method: 'POST',
+						header: {
+							'content-type': 'application/x-www-form-urlencoded'
+						},
+						data: {
+							guaawardaddress: _this.district,
+							guaguaid: _this.gid,
+							userid: 5
+						},
+						success: res => {
+							console.log(res)
+							
+							if (res.data.msg == 'succeed') {
+								let tombola = JSON.parse(res.data.data)
+								console.log(tombola);
+								this.coupnamess = tombola.couponinfo.couponname
+								_this.secrch = true
+							} else if (res.data.msg == 'failure') {
+								console.log(2)
+
+							}else{
+								uni.showModal({
+									title: '温馨提示',
+									content: '奖品已被你全部拿走了',
+									showCancel: false
+								});
+							}
+						}
+					})
+				} else {
+					//分享
+					console.log("进入分享")
+					//this.onShareAppMessage()
+					this.fenxiang();
+				}
+
+
+			},
+			fenxiang(){
 				let _this = this;
 				uni.request({
-					url: _this.http + '/ActivrecordController/putlatombola.do',
+					url: _this.http + '/ActivrecordController/putlottosharebyuserwx.do',
 					method: 'POST',
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					data: {
-						guaawardaddress: _this.district,
-						guaguaid: _this.gid,
+				
 						userid: 5
 					},
 					success: res => {
-						let tombola = JSON.parse(res.data.data)
-						console.log(res.data.msg)
 						if (res.data.msg == 'succeed') {
-							console.log(1)
-							_this.secrch = true
-							// _this.num_el = tombola.tombstone
-							// _this.src_btn = '立即刮奖1'
-							
-						} else if (res.data.msg == 'abnormal') {
-							console.log(2)
-							// _this.num_el = tombola.tombstone
-							// _this.src_btn = '去分享'
-							
-						} else if (res.data.msg == 'rester') {
-							console.log(3)
-							// _this.num_el = tombola.tombstone
-							// _this.src_btn = '立即刮奖2'
-						} else {
-							console.log(4)
-							// _this.num_el = tombola.tombstone
-							// _this.src_btn = '明日再来'
+							this.btn_oul = false 
+							this.btn_on = true
+							this.getbilityinfo
+						} else if (res.data.msg == 'failure') {
+						
 						}
+						
 					}
-				})	
+					
+				})
+			}
+			
+			,
+			colse: function() {
+				this.secrch = false
+				this.getbilityinfo();
+			}, //转发
+			onShareAppMessage(res) {
+				if (res.from === 'button') { // 来自页面内分享按钮
+					
+				}
+				return {
+					title: '自定义分享标题',
+					// path: '/pages/test/test?id=123'
+					success: function() {
+						let _this = this;
+						uni.request({
+							url: _this.http + '/ActivrecordController/putlottosharebyuserwx.do',
+							method: 'POST',
+							header: {
+								'content-type': 'application/x-www-form-urlencoded'
+							},
+							data: {
+
+								userid: 5
+							},
+							success: res => {
+								console.log(res)
+								this.getbilityinfo
+							}
+							
+						})
+					},
+					fail: function(){
+						console.log("进入其中")
+						let _this = this;
+						uni.request({
+							url: _this.http + '/ActivrecordController/putlottosharebyuserwx.do',
+							method: 'POST',
+							header: {
+								'content-type': 'application/x-www-form-urlencoded'
+							},
+							data: {
+								userid: 5
+							},
+							success: res => {
+								console.log(res)
+								this.getbilityinfo
+							}
+						})
+					}
+				}
 			}
 		}
 	}

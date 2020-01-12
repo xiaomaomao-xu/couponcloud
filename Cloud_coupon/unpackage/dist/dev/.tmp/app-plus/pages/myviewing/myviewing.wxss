@@ -1,13 +1,26 @@
-.collect{width: 90%;margin: 0 5%;border-bottom: 1px solid #EAEAEA;height: auto;overflow: hidden;padding: 20rpx 0;box-sizing: border-box;}
+.collect{width: 90%;margin: 0 5%;border-bottom: 1px solid #EAEAEA;height: auto;overflow: hidden;padding: 20rpx 0;-webkit-box-sizing: border-box;box-sizing: border-box;}
 .collect_le{width: 35%;float: left;height: auto;overflow: hidden;}
 .collect_le image{width: 200rpx;height: 200rpx;}
-.collect_ri{width: 65%;float: right;height: auto;overflow: hidden;}
-.collect_ri >view{height: auto;overflow: hidden;padding: 5rpx 20rpx;box-sizing: border-box;}
+.collect_ri{width: 65%;float: right;height: auto;}
+.collect_ri >view{height: auto;overflow: hidden;padding: 5rpx 20rpx;-webkit-box-sizing: border-box;box-sizing: border-box;}
 .collect_add{font-size: 0.7rem;}
 .collect_add text{display: block;}
 .collect_add text:nth-of-type(2){float: right;}
-.collect_add text:nth-of-type(1){font-size: 0.9rem;font-weight: bold;width: 70%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;float: left;}
+.collect_add text:nth-of-type(1){font-size: 0.9rem;font-weight: bold;width: 70%;overflow: hidden;-o-text-overflow: ellipsis;text-overflow: ellipsis;white-space: nowrap;float: left;}
 .collect_stars image{width: 30rpx;height: 30rpx;float: left;}
-.collect_sales{font-size: 0.8rem;color: #eb6100;}
-.collect_res{font-size: 0.8rem;}
+.collect_sales{font-size: 0.8rem;color: #eb6100;overflow: hidden;-o-text-overflow: ellipsis;text-overflow: ellipsis;white-space: nowrap;width: 80%;}
+.collect_res{font-size: 0.8rem;overflow: hidden;-o-text-overflow: ellipsis;text-overflow: ellipsis;white-space: nowrap;width: 80%;}
+.collect_btn{font-size: 0.8rem;padding: 10rpx;-webkit-box-sizing: border-box;box-sizing: border-box;background: #f18711;color: white;border-radius: 10rpx;float: right;}
+.collect_time{width: 60%;display: block;float: left;font-size: 0.7rem;overflow: hidden;-o-text-overflow: ellipsis;text-overflow: ellipsis;white-space: nowrap;}
+.defect{width: 100%;height: auto;overflow: hidden;}
+.defect image{width: 300rpx;height: 300rpx;margin: 100rpx auto 40rpx auto;display: block;}
+.defect text{display: block;font-size: 0.9rem;color: #868686;text-align: center;width: 100%;font-weight: bold;}
+.video_el{width: 100%;height: 100%;overflow: hidden;background: rgba(0,0,0,0.5);z-index: 999;position: absolute;top: 0;}
+.film_box{width: 80%;height: auto;overflow: hidden;position: absolute;top: 50%;left: 50%;-webkit-transform: translate(-50%,-50%);-ms-transform: translate(-50%,-50%);transform: translate(-50%,-50%);background: white;z-index: 999;border-radius: 10rpx;}
+.film_box>image{width: 50rpx;height: 50rpx;position: absolute;top: 20rpx;right: 20rpx;}
+.film{width: 100%;height: auto;overflow: hidden;margin-top: 40rpx;padding: 20rpx 40rpx;-webkit-box-sizing: border-box;box-sizing: border-box;-o-text-overflow: ellipsis;text-overflow: ellipsis;white-space: nowrap;}
+.film view:first-child{border-bottom: 1px solid #EAEAEA;color: #868686;padding: 20rpx 0;-webkit-box-sizing: border-box;box-sizing: border-box;margin-bottom: 40rpx;}
+.film view:nth-of-type(2){font-size: 0.9rem;font-weight: bold;}
+.film view:nth-of-type(3){font-size: 0.8rem;color: red;}
+.film view{font-size: 0.8rem;color: #000000;margin: 20rpx 0;}
 
