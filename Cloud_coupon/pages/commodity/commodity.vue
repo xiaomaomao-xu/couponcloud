@@ -35,7 +35,7 @@
 							<view class="text_el">
 								<textarea disabled="disabled" value="商品 描述 "></textarea>
 								<view class="mymoney"><text>原价:{{item.originalprice}}</text><text>库存:{{item.repertory}}</text></view>
-								<view class="centitel"><text>￥{{item.originalprice}}</text></view>
+								<view class="centitel"><text>￥{{item.currentprice}}</text></view>
 							</view>
 						</view>
 					</view>
