@@ -8,9 +8,9 @@
 		<view class="auth_data">
 			<swiper vertical="true" autoplay="true" circular="true" interval="3000" style="height: 100%;">
 				<swiper-item v-for="(item, index) in msg" :key="index">
-					<image :src="item.pic"></image>
-					<text>{{item.name}}</text>
-					<text>{{item.num}}</text>
+					<image :src="item.stores.obligatestrone"></image>
+					<text>{{item.stores.storename}}</text>
+					<text>{{item.num}}分钟前</text>
 				</swiper-item>
 			</swiper>
 		</view>
@@ -22,6 +22,7 @@
 	export default {
 		data() {
 			return {
+				fenzhong:'',
 				userinfo:{},
 				storid:0,
 				myorderid:'',
@@ -62,42 +63,18 @@
 			}
 		},
 		onLoad() {
-			this.getuserinfo()
 			this.getapprovertype()
 			this.getmsg()
 		},
 		methods: {
-			getuserinfo(){
-				console.log("getmsg::::::")
-				let _this = this;
-				uni.request({
-					url: _this.http + '/PersonageController/getuserinfobyid.do',
-					method: 'POST',
-					header: {
-						'content-type': 'application/x-www-form-urlencoded'
-					},
-					data: {
-						usid:5
-					},
-					success: res => {
-						let taiy_list = JSON.parse(res.data.data)
-						console.log("re::::::::::::s:::::")
-						console.log(res)
-						console.log("taerqweqweqweaiy_list::::::")
-						console.log(taiy_list)
-						if (res.data.msg == 'succeed') {
-						} else if (res.data.msg == 'failure') {
-							uni.showModal({
-								title: '温馨提示',
-								content: '暂无数据',
-								showCancel: false
-							});
-						}
-					}
-				})
+			getminute(val){
+				var mydate = new Date(val);
+				var date = new Date();
+				var leaddate = date - mydate
+				this.fenzhong=Math.floor(leaddate/(60*1000))
+
 			},
 			getmsg(){
-				console.log("getmsg::::::")
 				let _this = this;
 				uni.request({
 					url: _this.http + '/MerchantController/getappreoveshopss.do',
@@ -109,11 +86,13 @@
 					},
 					success: res => {
 						let taiy_list = JSON.parse(res.data.data)
-						console.log("res:::::")
-						console.log(res)
-						console.log("taiy_list::::::")
-						console.log(taiy_list)
 						if (res.data.msg == 'succeed') {
+							for(var i=0;i<taiy_list.length;i++){
+								taiy_list[i].stores.obligatestrone = _this.http + '/' + taiy_list[i].stores.obligatestrone
+								_this.getminute(taiy_list[i].createtime)
+								taiy_list[i].num = _this.fenzhong
+							}
+							_this.msg = taiy_list
 						} else if (res.data.msg == 'failure') {
 							uni.showModal({
 								title: '温馨提示',
@@ -133,7 +112,6 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					data: {
-
 					},
 					success: res => {
 						console.log("res::")
