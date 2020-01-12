@@ -121,8 +121,11 @@
 					this.delisel(mycode)
 				}else {
 					let _this = this;
+					let list = this.list;
+					var mylist = [];
 					for(var i=0;i<_this.offerlist.length;i++){
 						_this.argumentlist.push(_this.offerlist[i].comdiid)
+						mylist.push(_this.offerlist[i].comdiid)
 					}
 					var param = JSON.stringify(_this.argumentlist);
 					uni.request({
@@ -137,6 +140,14 @@
 						},
 						success: res => {
 							if (res.data.msg == 'succeed') {
+								for(var i=0;i<list.length;i++)
+								{
+									for(var j=0;j<mylist.length;j++){
+										if(list[i].comdiid == mylist[j]){
+											list.splice(i,1);
+										}
+									}
+								}
 							} else if (res.data.msg == 'failure') {
 								uni.showModal({
 									title: '温馨提示',
