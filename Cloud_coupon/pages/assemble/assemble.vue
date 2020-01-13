@@ -149,6 +149,7 @@
 						groupaddress: _this.district
 					},
 					success: res => {
+						console.log(res)
 						if (res.data.msg == 'succeed') {
 							let top_list = JSON.parse(res.data.data)
 							let all = top_list.length
