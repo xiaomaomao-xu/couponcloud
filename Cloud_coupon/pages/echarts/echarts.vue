@@ -1,9 +1,13 @@
 <template>
 	<view style="width: 100%;position: absolute;top: 0;left: 0;bottom: 0;height: auto;overflow: scroll;background: #f0f0f0;">
 		<view class="time_box">
-			<input type="text" placeholder="初始时间" v-model="startDate">
-			<input type="text" placeholder="结束时间" v-model="endDate">
-			<view @click="getcouponrecord">数据查询</view>
+			<picker mode="date" :value="date" :start="startDate" :end="endDate" @change="bindDateChange">
+				<view class="uni-input">{{date}}</view>
+			</picker>
+			<picker mode="date" :value="date1" :start="startDate" :end="endDate" @change="bindDateChange1">
+				<view class="uni-input">{{date1}}</view>
+			</picker>
+			<view @click="data_query">数据查询</view>
 		</view>
 		<view class="pic_title">
 			<view>
@@ -37,40 +41,13 @@
 		<view class="qiun-common-mt" style="font-size:14px;text-align: center;padding: 20rpx 0;background: white;">
 			图表上左右移动查看更多数据
 		</view>
-		<view class="data_list">
-			<view class="years">10月18</view>
+		<view class="data_list" v-for="(item,index) in data_box" :key='index'>
+			<view class="years">{{item.time}}</view>
 			<view class="list_el">
-				<view>发券量<text>:</text><text>3</text></view>
-				<view>发券量<text>:</text><text>3</text></view>
-				<view>发券量<text>:</text><text>3</text></view>
-				<view>发券量<text>:</text><text>3</text></view>
-			</view>
-		</view>
-		<view class="data_list">
-			<view class="years">10月18</view>
-			<view class="list_el">
-				<view>发券量<text>:</text><text>3</text></view>
-				<view>发券量<text>:</text><text>3</text></view>
-				<view>发券量<text>:</text><text>3</text></view>
-				<view>发券量<text>:</text><text>3</text></view>
-			</view>
-		</view>
-		<view class="data_list">
-			<view class="years">10月18</view>
-			<view class="list_el">
-				<view>发券量<text>:</text><text>3</text></view>
-				<view>发券量<text>:</text><text>3</text></view>
-				<view>发券量<text>:</text><text>3</text></view>
-				<view>发券量<text>:</text><text>3</text></view>
-			</view>
-		</view>
-		<view class="data_list">
-			<view class="years">10月18</view>
-			<view class="list_el">
-				<view>发券量<text>:</text><text>3</text></view>
-				<view>发券量<text>:</text><text>3</text></view>
-				<view>发券量<text>:</text><text>3</text></view>
-				<view>发券量<text>:</text><text>3</text></view>
+				<view>发券量<text>:</text><text>{{item.num1}}</text></view>
+				<view>领劵量<text>:</text><text>{{item.num2}}</text></view>
+				<view>已使用<text>:</text><text>{{item.num3}}</text></view>
+				<view>已过期<text>:</text><text>{{item.num4}}</text></view>
 			</view>
 		</view>
 	</view>
@@ -85,32 +62,38 @@
 	var lastMoveTime = null; //最后执行移动的时间戳
 	export default {
 		data() {
+			const currentDate = this.getDate({
+				format: true
+			})
 			return {
-				startDate:'',
-				endDate:'',
+				date: '初始时间',
+				date1: '结束时间',
+				startdate: '',
+				enddate: '',
 				cWidth: '',
 				cHeight: '',
 				pixelRatio: 1,
 				textarea: '',
 				Interactive: '', //交互显示的数据
+				data_box: [],
 				LineA: {
-					categories: ['10月18', '10月19', '10月20', '10月21', '10月22', '10月23','10月18', '10月19', '10月20', '10月21', '10月22', '10月23'],
-					// categories: ['10月18', '10月19'],
-					series: [
-						{
+					// categories: ['10月18', '10月19', '10月20', '10月21', '10月22', '10月23', '10月18', '10月19', '10月20', '10月21', '10月22',
+					// 	'10月23'
+					// ],
+					categories: [],
+					series: [{
 						name: '发券量',
-						data: [5, 2, 5, 7, 4, 2, 5, 2, 5, 7, 4, 2]
+						data: []
 					}, {
 						name: '领券量',
-						data: [7, 4, 6, 10, 4, 6, 7, 4, 6, 9, 4, 6, ]
-					}, {
-						name: '已领券',
-						data: [10, 8, 5, 5, 2, 1, 7, 4, 6, 10, 4, 5, ]
+						data: []
 					}, {
 						name: '已使用',
-						data: [6, 3, 8, 2, 3, 11, 7, 4, 6, 8, 4, 2, ]
-					},
-					]
+						data: []
+					}, {
+						name: '已过期',
+						data: []
+					}, ]
 				}
 			}
 		},
@@ -131,17 +114,72 @@
 			//#endif
 			this.cWidth = uni.upx2px(750);
 			this.cHeight = uni.upx2px(500);
-			this.getServerData();
+			//当前时间
+			let startdate = new Date()
+			startdate.setTime(startdate.getTime());
+			this.startdate = startdate
+			//前五天
+			let enddate = new Date()
+			enddate.setTime(enddate.getTime() - 24 * 60 * 60 * 1000 * 5);
+			this.enddate = enddate
+			console.log(this.enddate)
+			console.log(this.startdate)
+			this.getcouponrecord()
+		},
+		computed: {
+			startDate() {
+				return this.getDate('start');
+			},
+			endDate() {
+				return this.getDate('end');
+			}
 		},
 		methods: {
-			getcouponrecord(){
+			bindDateChange: function(e) {
+				this.date = e.target.value
+			},
+			bindDateChange1: function(e) {
+				this.date1 = e.target.value
+			},
+			getDate(type) {
+				const date = new Date();
+				let year = date.getFullYear();
+				let month = date.getMonth() + 1;
+				let day = date.getDate();
+			
+				if (type === 'start') {
+					year = year - 60;
+				} else if (type === 'end') {
+					year = year + 2;
+				}
+				month = month > 9 ? month : '0' + month;;
+				day = day > 9 ? day : '0' + day;
+				return `${year}-${month}-${day}`;
+			},
+			data_query(){
+				let s1 = Date.parse(new Date(this.date1))
+				let s =  Date.parse(new Date(this.date))
+				let das = parseInt((s1-s)/ (1000 * 60 * 60 * 24))
+				if(this.date > this.date1){
+					uni.showModal({
+						title: '温馨提示',
+						content: '初始时间大于结束时间',
+						showCancel: false
+					});
+				}else if(das > 5){
+					uni.showModal({
+						title: '温馨提示',
+						content: '只展示5天数据,请重新选择',
+						showCancel: false
+					});
+				}else{
+					this.enddate = new Date(this.date)
+					this.startdate = new Date(this.date1)
+					this.getcouponrecord()
+				}
+			},
+			getcouponrecord() {
 				let _this = this;
-				var startdate = new Date(this.startDate)
-				var enddate = new Date(this.endDate)
-				console.log("startdate")
-				console.log(startdate)
-				console.log("enddate")
-				console.log(enddate)
 				uni.request({
 					url: _this.http + '/MerchantController/getstorebyidcouponlist.do',
 					method: 'POST',
@@ -149,22 +187,47 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					data: {
-						altertime:startdate,
-						createtime: enddate,
+						altertime: _this.enddate,
+						createtime: _this.startdate,
 						scrstore: uni.getStorageSync('storeid')
 					},
 					success: res => {
+						//折线图配置
+						let LineA = this.LineA;
+						LineA.categories = this.LineA.categories;
+						LineA.series = this.LineA.series;
+						_self.textarea = JSON.stringify(this.LineA);
+						_self.showLineA("canvasLineA", LineA);
+						console.log(res)
 						let taiy_list = JSON.parse(res.data.data)
 						if (res.data.msg == 'succeed') {
-							console.log("taiy_list")
-							console.log(taiy_list)
-							// if(this.page==1){
-							// 	this.list=taiy_list.list
-							// }else{
-							// 	for(var i=0;i<taiy_list.list.length;i++){
-							// 		this.list.push(taiy_list.list[i])
-							// 	}
-							// }
+							_this.data_box.splice(0,_this.data_box.length)
+							LineA.categories.splice(0,LineA.categories.length)
+							LineA.series[0].data.splice(0,LineA.series[0].data.length)
+							LineA.series[1].data.splice(0,LineA.series[1].data.length)
+							LineA.series[2].data.splice(0,LineA.series[2].data.length)
+							LineA.series[3].data.splice(0,LineA.series[3].data.length)
+							for (var i = 0; i < taiy_list.length; i++) {
+								let voucher_time = new Date(taiy_list[i].createtime)
+								let year = voucher_time.getFullYear();
+								let month = voucher_time.getMonth() + 1;
+								let day = voucher_time.getDate();
+								_this.data_box.push({
+									time: year + '年' + month + '月' + day + '日',
+									num1: taiy_list[i].scrdelivernum,
+									num2: taiy_list[i].scrdrawnum,
+									num3: taiy_list[i].scrusenum,
+									num4: taiy_list[i].scroverduenum,
+								})
+								LineA.categories.push( month + '月' + day + '日')
+								LineA.series[0].data.push(taiy_list[i].scrdelivernum)
+								LineA.series[1].data.push(taiy_list[i].scrdrawnum)
+								LineA.series[2].data.push(taiy_list[i].scrusenum)
+								LineA.series[3].data.push(taiy_list[i].scroverduenum)
+							}
+							console.log(_this.LineA)
+							console.log(LineA.categories)
+							console.log(LineA.series)
 						} else if (res.data.msg == 'failure') {
 							uni.showModal({
 								title: '温馨提示',
@@ -174,35 +237,6 @@
 						}
 					}
 				})
-			},
-			getServerData() {
-				let LineA = this.LineA;
-				LineA.categories = this.LineA.categories;
-				LineA.series = this.LineA.series;
-				_self.textarea = JSON.stringify(this.LineA);
-				_self.showLineA("canvasLineA", LineA);
-				// uni.request({
-				// 	url: 'https://www.ucharts.cn/data.json',
-				// 	data:{
-				// 	},
-				// 	success: function(res) {
-				// 		console.log(res.data.data)
-				// 		console.log(res)
-				// 		let LineA={categories:[],series:[]};
-				// 		//这里我后台返回的是数组，所以用等于，如果您后台返回的是单条数据，需要push进去
-				// 		LineA.categories=res.data.data.LineA.categories;
-				// 		LineA.series=res.data.data.LineA.series;
-
-				// 		//第二根线为虚线的设置
-				// 		// LineA.series[1].lineType='dash';
-				// 		// LineA.series[1].dashLength=10;
-				// 		_self.textarea = JSON.stringify(res.data.data.LineA);
-				// 		_self.showLineA("canvasLineA",LineA);
-				// 	},
-				// 	fail: () => {
-				// 		_self.tips="网络错误，小程序端请检查合法域名";
-				// 	},
-				// });
 			},
 			showLineA(canvasId, chartData) {
 				canvaLineA = new uCharts({
@@ -233,7 +267,7 @@
 						gridType: 'dash',
 						dashLength: 8,
 						itemCount: 5, //x轴单屏显示数据的数量，默认为5个
-						scrollShow: true, //新增是否显示滚动条，默认false
+						scrollShow: false, //新增是否显示滚动条，默认false
 						scrollAlign: 'left', //滚动条初始位置
 						scrollBackgroundColor: '#F7F7FF', //默认为 #EFEBEF
 						scrollColor: '#DEE7F7', //默认为 #A6A6A6
@@ -242,6 +276,7 @@
 						gridType: 'dash',
 						gridColor: '#CCCCCC',
 						dashLength: 8,
+						format:(val)=>{return val.toFixed(0)}
 					},
 					width: _self.cWidth * _self.pixelRatio,
 					height: _self.cHeight * _self.pixelRatio,

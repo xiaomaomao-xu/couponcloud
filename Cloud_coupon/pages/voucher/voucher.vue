@@ -91,7 +91,6 @@
 						console.log(voucher_list)
 						if (res.data.msg == 'succeed') {
 							for (var l = 0; l < voucher_list.list.length; l++) {
-								console.log(voucher_time)
 								let voucher_time = new Date(voucher_list.list[l].couponinfo.createtime)
 								let year=voucher_time.getFullYear();
 							    let month=voucher_time.getMonth()+1; 
