@@ -27,15 +27,15 @@
 							<text>{{item.commodiname}}</text>
 						</view>
 						<image src="../../static/images/icon23.png" class="empty" @tap='deletes(index)'></image>
-						<view class="shop_couent" @tap="couent">
+						<view class="shop_couent" @tap="couent(item.comdiid)">
 							<view class="couent_pic">
-								<image src="../../static/images/pg1.png"></image>
-								<!-- <image :src="item.commodiimg"></image> -->
+								<!-- <image src="../../static/images/pg1.png"></image> -->
+								<image :src="item.commodiimg"></image>
 							</view>
 							<view class="text_el">
 								<textarea disabled="disabled" value="商品 描述 "></textarea>
 								<view class="mymoney"><text>原价:{{item.originalprice}}</text><text>库存:{{item.repertory}}</text></view>
-								<view class="centitel"><text>￥{{item.originalprice}}</text></view>
+								<view class="centitel"><text>￥{{item.currentprice}}</text></view>
 							</view>
 						</view>
 					</view>
@@ -94,13 +94,17 @@
 					name: '删除',
 					pic: "../../static/images/icon23.png",
 					code:2
+				}, {
+					name: '添加',
+					pic: "../../static/images/icon23.png",
+					code:3
 				}],
 				codebtnlist:[]
 			}
 		},
 		onLoad() {
 			for(var i=0;i<this.btnList.length;i++){
-				if(i != 0){
+				if(i != 0 && i != 3){
 					this.codebtnlist.push(this.btnList[i])
 				}
 			}
@@ -111,13 +115,17 @@
 				var mycode = this.codebtnlist[val].code
 				console.log("mycode")
 				console.log(mycode)
-				
-				if(mycode == 2){
+				if(mycode == 3){
+					this.addoffer()
+				}else if(mycode == 2){
 					this.delisel(mycode)
 				}else {
 					let _this = this;
+					let list = this.list;
+					var mylist = [];
 					for(var i=0;i<_this.offerlist.length;i++){
 						_this.argumentlist.push(_this.offerlist[i].comdiid)
+						mylist.push(_this.offerlist[i].comdiid)
 					}
 					var param = JSON.stringify(_this.argumentlist);
 					uni.request({
@@ -132,6 +140,14 @@
 						},
 						success: res => {
 							if (res.data.msg == 'succeed') {
+								for(var i=0;i<list.length;i++)
+								{
+									for(var j=0;j<mylist.length;j++){
+										if(list[i].comdiid == mylist[j]){
+											list.splice(i,1);
+										}
+									}
+								}
 							} else if (res.data.msg == 'failure') {
 								uni.showModal({
 									title: '温馨提示',
@@ -166,7 +182,12 @@
 					},
 					success: res => {
 						let taiy_list = JSON.parse(res.data.data)
+						console.log("taiy_list")
+						console.log(taiy_list)
 						if (res.data.msg == 'succeed') {
+							for(var i=0;i<taiy_list.list.length;i++){
+								taiy_list.list[i].commodiimg = _this.http + '/' + taiy_list.list[i].commodiimg
+							}
 							if(this.page==1){
 								this.list=taiy_list.list
 							}else{
@@ -174,6 +195,7 @@
 									this.list.push(taiy_list.list[i])
 								}
 							}
+							
 						} else if (res.data.msg == 'failure') {
 							uni.showModal({
 								title: '温馨提示',
@@ -185,22 +207,29 @@
 				})
 				// this.codebtnlist=[];
 			},
-			couent: function() {
+			couent: function(comdiid) {
+				uni.setStorageSync('comdiid', comdiid);
+				uni.navigateTo({
+					url: '../edit_dity/edit_dity'
+				})
+			},
+			addoffer: function() {
 				uni.navigateTo({
 					url: '../edit_dity/edit_dity'
 				})
 			},
 			btn_click: function(index) {
+				console.log(index)
 				this.codebtnlist=[];
 				if(index == 0){
 					for(var i=0;i<this.btnList.length;i++){
-						if(i != 0){
+						if(i != 0 && i != 3){
 							this.codebtnlist.push(this.btnList[i])
 						}
 					}
 				}else if(index == 1){
 					for(var i=0;i<this.btnList.length;i++){
-						if(i != 1){
+						if(i != 1 && i != 3){
 							this.codebtnlist.push(this.btnList[i])
 						}
 					}
@@ -308,6 +337,12 @@
 								},
 								success: res => {
 									if (res.data.msg == 'succeed') {
+										for(var i=0;i<list.length;i++)
+										{
+											if(list[i].comdiid == that.list[index].comdiid){
+												list.splice(i,1);
+											}
+										}
 									} else if (res.data.msg == 'failure') {
 										uni.showModal({
 											title: '温馨提示',
@@ -328,6 +363,7 @@
 							console.log(that.piece)
 							console.log("that.list[]")
 							console.log(list[index])
+							console.log("sdf")
 							// 如果数据为空
 							if (!list.length) {
 								that.hasList = false
@@ -355,8 +391,10 @@
 					content: '确认清空购物车吗',
 					success: function(res) {
 						if (res.confirm) {
+							var mylist = [];
 							for(var i=0;i<that.offerlist.length;i++){
 								that.argumentlist.push(that.offerlist[i].comdiid)
+								mylist.push(that.offerlist[i].comdiid)
 							}
 							var param = JSON.stringify(that.argumentlist);
 							uni.request({
@@ -370,6 +408,14 @@
 								},
 								success: res => {
 									if (res.data.msg == 'succeed') {
+										for(var i=0;i<list.length;i++)
+										{
+											for(var j=0;j<mylist.length;j++){
+												if(list[i].comdiid == mylist[j]){
+													list.splice(i,1);
+												}
+											}
+										}
 									} else if (res.data.msg == 'failure') {
 										uni.showModal({
 											title: '温馨提示',

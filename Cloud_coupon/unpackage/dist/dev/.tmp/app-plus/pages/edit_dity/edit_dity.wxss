@@ -1,10 +1,10 @@
-.details{width: 100%;height: auto;overflow: scroll;background: #F0F0F0;padding: 0 5% 120rpx 5%;box-sizing: border-box;background: #F0F0F0;}
+.details{width: 100%;height: auto;overflow: scroll;background: #F0F0F0;padding: 0 5% 120rpx 5%;-webkit-box-sizing: border-box;box-sizing: border-box;background: #F0F0F0;}
 .details_data{width: 100%;height: auto;overflow: hidden;}
-.datails_list{width: 100%;height: 100rpx;line-height: 100rpx;border-bottom: 1px solid #EAEAEA;padding: 0 30rpx;box-sizing: border-box;margin-top: 20rpx;background: white;border-radius: 10rpx;}
+.datails_list{width: 100%;height: 100rpx;line-height: 100rpx;border-bottom: 1px solid #EAEAEA;padding: 0 30rpx;-webkit-box-sizing: border-box;box-sizing: border-box;margin-top: 20rpx;background: white;border-radius: 10rpx;}
 .datails_list view{width: 30%;font-size: 0.8rem;color: #000000;height: 100%;float: left;}
 .datails_list input{width: 70%;height: 100%;font-size: 0.8rem;color: #000000;float: left;}
 input::-webkit-input-placeholder{color: #606060;}
-.datails_pic{width: 100%;height: auto;overflow: hidden;background: white;margin: 20rpx 0;padding: 30rpx;box-sizing: border-box;border-radius: 10rpx;}
+.datails_pic{width: 100%;height: auto;overflow: hidden;background: white;margin: 20rpx 0;padding: 30rpx;-webkit-box-sizing: border-box;box-sizing: border-box;border-radius: 10rpx;}
 .pic_title{font-size: 0.8rem;width: 100%;margin-bottom: 20rpx;}
 .datails_sub{width: 160rpx;height: 160rpx;margin: 20rpx;float: left;}
 .datails_sub image{width: 100%;height: 100%;}

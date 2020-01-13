@@ -1,4 +1,4 @@
-.trans_box{width: 100%;height: auto;overflow: hidden;background: #fbfbfb;padding: 30rpx 5%;box-sizing: border-box;}
+.trans_box{width: 100%;height: auto;overflow: hidden;background: #fbfbfb;padding: 30rpx 5%;-webkit-box-sizing: border-box;box-sizing: border-box;}
 .trans_box>view{width: 100%;height: auto;overflow: hidden;}
 .trans_time text{font-size: 0.9rem;font-weight: bold;display: block;float: left;}
 .trans_time image{width: 40rpx;height: 40rpx;margin-top: 5rpx;display: block;float: left;}
@@ -7,13 +7,16 @@
 .post_titile{width: 90%;margin: 0 5%;height: auto;overflow: hidden;border-bottom: 1px solid #EAEAEA;}
 .post_titile:last-child{border-bottom: none;}
 .post_titile>image{width: 100rpx;height: 100rpx;float: left;border-radius: 50%;margin: 15rpx 0;}
-.post_new{width: 85%;float: right;height: 130rpx;box-sizing: border-box;padding: 0 15rpx;box-sizing: border-box;}
+.post_new{width: 85%;float: right;height: 130rpx;-webkit-box-sizing: border-box;box-sizing: border-box;padding: 0 15rpx;box-sizing: border-box;}
 .new_el{width: 100%;height: auto;margin: 20rpx 0;}
 .new_el>view{width: 100%;height: auto;overflow: hidden;}
 .new_el>view text{font-size: 0.7rem;}
 .new_el>view:nth-of-type(1) text{display: block;float: left;}
-.new_el>view:nth-of-type(1) text:nth-of-type(1){font-size: 0.9rem;font-weight: bold;width: 50%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+.new_el>view:nth-of-type(1) text:nth-of-type(1){font-size: 0.9rem;font-weight: bold;width: 50%;overflow: hidden;-o-text-overflow: ellipsis;text-overflow: ellipsis;white-space: nowrap;}
 .new_el>view:nth-of-type(1) text:nth-of-type(2){width: auto;float: right !important;}
 .new_el>view:nth-of-type(2) text:nth-of-type(3){float: right;}
 .new_el>view:nth-of-type(2) text:nth-of-type(1){margin-right: 20rpx;}
+.defect{width: 100%;height: auto;overflow: hidden;}
+.defect image{width: 300rpx;height: 300rpx;margin: 100rpx auto 40rpx auto;display: block;}
+.defect text{display: block;font-size: 0.9rem;color: #868686;text-align: center;width: 100%;font-weight: bold;}
 

@@ -6,18 +6,18 @@
 .prize_title>view:nth-of-type(1) view{width: 60%;height: 4rpx;background: #000000;margin: 48rpx 0 48rpx 40%;}
 .prize_title>view:nth-of-type(3) view{width: 60%;height: 4rpx;background: #000000;margin: 48rpx 40% 48rpx 0;}
 .prize_title>view:nth-of-type(2){width: 33%;text-align: center;line-height: 100rpx;height: 100rpx;float: left;}
-.pularity{width: 100%;padding: 40rpx 2.5%;box-sizing: border-box;background: white;height: auto;overflow: hidden;}
+.pularity{width: 100%;padding: 40rpx 2.5%;-webkit-box-sizing: border-box;box-sizing: border-box;background: white;height: auto;overflow: hidden;}
 .swiper1{height: 500rpx;}
-.pularity_el{width: 50%;padding: 0 2.5%;box-sizing: border-box;height: 100%;float: left;}
+.pularity_el{width: 50%;padding: 0 2.5% 40rpx 2.5%;-webkit-box-sizing: border-box;box-sizing: border-box;height: 100%;float: left;}
 .pularity_el image{width: 100%;height: 300rpx;border-radius: 10rpx;}
 .pularity_el view:nth-of-type(1) text{font-size: 0.8rem;font-weight: bold;}
 .pularity_el view:nth-of-type(2) text{font-size: 0.6rem;font-weight: bold;color: red;border: 1px solid red;padding: 5rpx 10rpx;margin-right: 20rpx;border-radius: 5rpx;}
 .pularity_el view:nth-of-type(3) text{color: #666666;font-size: 0.6rem;}
 .pularity_el view:nth-of-type(3) text:nth-of-type(2){font-size: 0.6rem;padding: 5rpx 15rpx;background: red;color: white;float: right;border-radius: 5rpx;}
-.activity_list{width: 100%;height: 100rpx;line-height: 100rpx;background: white;padding: 0 2.5%;box-sizing: border-box;overflow-x: auto;white-space: nowrap;margin-top: 30rpx;border-bottom: 1px solid #EAEAEA;}
+.activity_list{width: 100%;height: 100rpx;line-height: 100rpx;background: white;padding: 0 2.5%;-webkit-box-sizing: border-box;box-sizing: border-box;overflow-x: auto;white-space: nowrap;margin-top: 30rpx;border-bottom: 1px solid #EAEAEA;}
 .list_our{font-size: 0.8rem;padding: 0 40rpx;width: auto;height: 100%;display: inline-block;font-weight: bold;}
 .list_our text{padding: 20rpx 0;}
 .active{border-bottom: 2px solid #faac47;}
 .activity_list::-webkit-scrollbar {display: none;}
-.riteoel{width: 100%;height: auto;overflow: hidden;background: white;padding: 0 2.5%;box-sizing: border-box;}
+.riteoel{width: 100%;height: auto;overflow: hidden;background: white;padding: 0 2.5% 40rpx 2.5%;-webkit-box-sizing: border-box;box-sizing: border-box;}
 

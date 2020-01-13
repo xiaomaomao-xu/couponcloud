@@ -1,8 +1,11 @@
-.virt_list{width: 100%;height: auto;overflow: hidden;padding: 0rpx 5%;box-sizing: border-box;margin-top: 40rpx;}
+.virt_list{width: 100%;height: auto;overflow: hidden;padding: 0rpx 5%;-webkit-box-sizing: border-box;box-sizing: border-box;margin-top: 40rpx;}
 .virt_card{width: 100%;height: auto;overflow: hidden;border-radius: 30rpx;background: red;margin-bottom: 20rpx;}
-.virt_le{width: 100%;height: auto;overflow: hidden;float: left;padding: 20rpx 40rpx;box-sizing: border-box;}
+.virt_le{width: 100%;height: auto;overflow: hidden;float: left;padding: 20rpx 40rpx;-webkit-box-sizing: border-box;box-sizing: border-box;}
 .virt_le view{width: 100%;height: auto;overflow: hidden;font-size: 0.7rem;color: white;}
 .virt_le view:nth-of-type(1) text{display: block;width: auto;float: left;}
 .virt_le view:nth-of-type(1) text:nth-of-type(2){float: right;}
 .virt_le view:nth-of-type(2){font-size: 1rem;margin: 40rpx 0;text-align: center;font-weight: bold;background: rgba(225,225,225,0.3);}
+.defect{width: 100%;height: auto;overflow: hidden;}
+.defect image{width: 300rpx;height: 300rpx;margin: 100rpx auto 40rpx auto;display: block;}
+.defect text{display: block;font-size: 0.9rem;color: #868686;text-align: center;width: 100%;font-weight: bold;}
 

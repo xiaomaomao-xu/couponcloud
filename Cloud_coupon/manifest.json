@@ -19,7 +19,8 @@
         "modules" : {
             "OAuth" : {},
             "Share" : {},
-            "Maps" : {}
+            "Maps" : {},
+            "Push" : {}
         },
         /* 应用发布信息 */
         "distribute" : {
