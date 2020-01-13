@@ -56,7 +56,7 @@
 				<image src="../../static/images/ggtc.png"></image>
 				<view class="btn_tcel">
 					<view>成功获取<text>{{coupnamess}}</text></view>
-					<view><text>查看详情</text></view>
+					<view><text @tap="xiangqian">查看详情</text></view>
 				</view>
 			</view>
 		</view>
@@ -284,6 +284,16 @@
 
 
 			},
+			//查看详情
+			xiangqian: function(){
+				console.log(123)
+				uni.switchTab({
+					url: "../voucher/voucher"
+				})
+			}
+			
+			,
+			//分享事件
 			fenxiang(){
 				let _this = this;
 				uni.request({
