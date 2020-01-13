@@ -191,7 +191,8 @@
 			},
 			link7:function(){
 				uni.navigateTo({
-					url:'../business/business'
+					// url:'../business/business',
+					url:'../signing/signing',
 				})
 			},
 			link8:function(){

@@ -39,7 +39,7 @@
 		<view class="notice">
 			<textarea placeholder="注:(免单券/体验券/试睡券/兑换券)特殊券需要注明部分商品还是全场可用" maxlength="200" v-model="rarea_el"/>
 		</view>
-		<view class="preview" @tap="preview">预览</view>
+		<view class="preview" @tap="preview">下一步</view>
 	</view>
 </template>
 
@@ -194,6 +194,17 @@
 						return
 					}
 					this.verifct()
+					try {
+						uni.setStorageSync("data",{
+							value_el:this.value_el,
+							current:this.num_box[this.currentIndex].val,
+							date:this.date,
+							date1:this.date1,
+							rarea:this.rarea_el,
+						})
+					} catch (e) {
+						
+					}
 				}
 				if(this.currentIndex == 3){
 					if(this.num_box[this.currentIndex].val1 == '' || this.num_box[this.currentIndex].val2 == ''){
@@ -205,6 +216,18 @@
 						return
 					}
 					this.verifct()
+					try {
+						uni.setStorageSync("data",{
+							value_el:this.value_el,
+							current1:this.num_box[this.currentIndex].val1,
+							current2:this.num_box[this.currentIndex].val2,
+							date:this.date,
+							date1:this.date1,
+							rarea:this.rarea_el,
+						})
+					} catch (e) {
+						
+					}
 				}
 				if(this.currentIndex == 2 || this.currentIndex == 4 || this.currentIndex == 5 || this.currentIndex == 7){
 					if(this.num_box[this.currentIndex].val1 == '' || this.num_box[this.currentIndex].val2 == ''){
@@ -224,17 +247,21 @@
 						return
 					}
 					this.verifct()
+					try {
+					    uni.setStorageSync("data",{
+					    	value_el:this.value_el,
+					    	current:this.num_box[this.currentIndex].val,
+					    	date:this.date,
+					    	date1:this.date1,
+					    	rarea:this.rarea_el,
+					    })
+					} catch (e) {
+						
+					}
 				}
 			},
 			verifct(){
 				if(this.date<this.date1){
-					try {
-					    uni.setStorageSync({
-							value_el:this.value_el,
-						});
-					} catch (e) {
-						
-					}
 					uni.navigateTo({
 						url:'../preview/preview'
 					})
