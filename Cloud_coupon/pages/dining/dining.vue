@@ -112,6 +112,7 @@
 						whoid: _this.whoid		
 					},
 					success: res => {
+						console.log(res)
 						if (res.data.msg == 'succeed') {
 							let details_list = JSON.parse(res.data.data)
 							console.log(details_list)
@@ -125,17 +126,20 @@
 							_this.money = details_list.colonelmonery/100
 							_this.tombstone =details_list.tombstone
 							_this.attentionremark = details_list.couponinfo.attentionremark
-							for(let i =0;i<details_list.groupbooklist.length;i++){
-								_this.msg.push({
-									pic: _this.http + '/' +details_list.groupbooklist[i].groupremark,
-									name: details_list.groupbooklist[i].groupname,
-									tnum:details_list.groupbooklist[i].grouppeoplenum - details_list.groupbooklist[i].currentnum,
-									num: '去拼单',
-								})
+							if(details_list.groupbooklist[0].groupbookid!=null&&details_list.groupbooklist[0].groupbookid!=undefined&&details_list.groupbooklist[0].groupbookid!=''){
+								for(let i =0;i<details_list.groupbooklist.length;i++){
+									_this.msg.push({
+										pic: _this.http + '/' +details_list.groupbooklist[i].groupremark,
+										name: details_list.groupbooklist[i].groupname,
+										tnum:details_list.groupbooklist[i].grouppeoplenum - details_list.groupbooklist[i].currentnum,
+										num: '去拼单',
+									})
+								}
+								for(let j = 0; j<details_list.groupbooklist.length;j+=2){
+									_this.list_el.push(_this.msg.slice(j,j+2))
+								}
 							}
-							for(let j = 0; j<details_list.groupbooklist.length;j+=2){
-								_this.list_el.push(_this.msg.slice(j,j+2))
-							}
+							
 							console.log(_this.msg)
 							//获取当前时间戳
 							let timestamp = (new Date()).getTime();
