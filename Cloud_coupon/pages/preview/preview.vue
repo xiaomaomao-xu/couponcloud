@@ -131,9 +131,9 @@
 					success: res => {
 						let taiy_list = JSON.parse(res.data.data)
 						if (res.data.msg == 'succeed') {
-							// if(taiy_list.usablemoney < _this.moneynum){
-							// 	_this.addwallet();
-							// }
+							if(taiy_list.usablemoney < _this.moneynum){
+								_this.addwallet();
+							}
 							_this.payflag = true;
 						} else if (res.data.msg == 'failure') {
 							uni.showModal({
@@ -323,16 +323,16 @@
 					_this.actypeid = 6
 				}
 				if(_this.value.trim()=='秒杀活动'){
-					this.valuenum = 3
+					_this.valuenum = 3
 					_this.payfunc3()
 				}else if(_this.value.trim()=='拼团活动'){
-					this.valuenum = 2
+					_this.valuenum = 2
 					_this.payfunc2()
 				}else if(_this.value.trim()=='刮刮活动'){
-					this.valuenum = 4
+					_this.valuenum = 4
 					_this.payfunc1()
 				}else if(_this.value.trim()=='直接获取'){
-					this.valuenum = 1
+					_this.valuenum = 1
 					_this.payfunc1()
 				}
 				
