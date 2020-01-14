@@ -19,7 +19,7 @@
 			</view>
 			<view class="lssui_list" v-show="assemble">
 				<view>开团数量:</view>
-				<input type="text" placeholder="填写发券数量" v-model="num1" @blur='blur1'>
+				<input type="text" placeholder="填写开团数量" v-model="num1" @blur='blur1'>
 			</view>
 			<view class="lssui_list" v-show="assemble" >
 				<view>拼团人数:</view>
@@ -27,7 +27,7 @@
 			</view>
 			<view class="lssui_list">
 				<view>发券数量:</view>
-				<input type="text" placeholder="填写发券数量" v-model="num">
+				<input type="text" placeholder="填写发券数量" v-model="num" @blur="payblur">
 			</view>
 			<view class="lssui_list" v-show="ass_time">
 				<view>开始日期:</view>
@@ -47,11 +47,11 @@
 			</view>
 			<view class="lssui_list" v-show="assemble">
 				<view>团长金额:</view>
-				<input type="text" placeholder="填写发券数量" v-model="mander">
+				<input type="text" placeholder="填写团长金额" v-model="mander">
 			</view>
 			<view class="lssui_list" v-show="assemble">
 				<view>团员金额:</view>
-				<input type="text" placeholder="填写发券时间" v-model="member">
+				<input type="text" placeholder="填写团员金额" v-model="member">
 			</view>
 		</view>
 		<view class="notice" v-show="assemble">
@@ -60,7 +60,7 @@
 		<view class="modol">
 			<text>温馨提示:撒德哈是拉开点距离喀什觉得拉萨看就得了撒开绿灯就撒了看大家阿斯利康大家拉斯阿斯达克laws建档立卡设计大赛离开</text>
 		</view>
-		<view class="preview"><text>支付￥122</text><text @tap="payment">立即支付</text></view>
+		<view class="preview" ><text>支付￥{{moneynum}}</text><text @tap="payment">立即支付</text></view>
 	</view>
 </template>
 
@@ -71,10 +71,20 @@
 				format: true
 			})
 			return {
+				payflag:false,
+				actypeid:0,
+				totalmonery:0,
+				magnastart:0,
+				magnanum:0,
+				meetmonery:0,
+				earnings:0,
+				fajuan:{},
+				moneynum:0,
 				assemble:false,
 				ass_time:false,
 				show: false,
 				value: '',
+				valuenum:0,
 				currentIndex: 0,
 				text_box: [{
 					name: '秒杀活动'
@@ -96,7 +106,7 @@
 			}
 		},
 		onLoad() {
-			console.log(uni.getStorageSync("data"));
+			this.fajuan = uni.getStorageSync("data")
 		},
 		computed: {
 			startDate() {
@@ -107,6 +117,226 @@
 			}
 		},
 		methods: {
+			paywallet(){
+				let _this = this;
+				uni.request({
+					url: _this.http + '/WalletController/getwallettouser.do',
+					method: 'POST',
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					data: {
+						userid:5
+					},
+					success: res => {
+						let taiy_list = JSON.parse(res.data.data)
+						if (res.data.msg == 'succeed') {
+							// if(taiy_list.usablemoney < _this.moneynum){
+							// 	_this.addwallet();
+							// }
+							_this.payflag = true;
+						} else if (res.data.msg == 'failure') {
+							uni.showModal({
+								title: '温馨提示',
+								content: '暂无数据',
+								showCancel: false
+							});
+						}
+					}
+				})
+			},
+			payblur(){
+				let _this = this;
+				_this.moneynum = _this.num
+			},
+			payfunc1(){
+				let _this = this;
+				_this.paywallet();
+				if(_this.payflag){
+					uni.request({
+						url: _this.http + '/ActrvrecouponController/putaddshtorebyactivitycoupon.do',
+						method: 'POST',
+						header: {
+							'content-type': 'application/x-www-form-urlencoded'
+						},
+						data: {
+							coutypeid:_this.valuenum,
+							storeid:uni.getStorageSync('storeid'),
+							couponname:_this.couponname,
+							totalmonerys:_this.totalmonery,
+							magnastart:_this.magnastart,
+							magnanum:_this.magnanum,
+							activitypeid:_this.actypeid,
+							meetmonery:_this.meetmonery,
+							earnings:_this.earnings,
+							couponnumbers:_this.num,
+							coubegintime:new Date(_this.date),
+							couendtime:new Date(_this.date1)
+						},
+						success: res => {
+							console.log("res")
+							console.log(res)
+							if (res.data.msg == 'succeed') {
+								console.log("res")
+								console.log(res)
+							} else if (res.data.msg == 'failure') {
+								uni.showModal({
+									title: '温馨提示',
+									content: '暂无数据',
+									showCancel: false
+								});
+							}
+						}
+					})
+				}
+				_this.payflag = false;
+			},
+			payfunc2(){
+				let _this = this;
+				_this.paywallet();
+				if(_this.payflag){
+					uni.request({
+						url: _this.http + '/ActrvrecouponController/putaddshtorebyactivitycoupon.do',
+						method: 'POST',
+						header: {
+							'content-type': 'application/x-www-form-urlencoded'
+						},
+						data: {
+							coutypeid:_this.valuenum,
+							storeid:uni.getStorageSync('storeid'),
+							couponname:_this.couponname,
+							totalmonerys:_this.totalmonery,
+							magnastart:_this.magnastart,
+							magnanum:_this.magnanum,
+							activitypeid:_this.actypeid,
+							meetmonery:_this.meetmonery,
+							earnings:_this.earnings,
+							couponnumbers:_this.num,
+							coubegintime:new Date(_this.date),
+							couendtime:new Date(_this.date1),
+							allwhoperson:_this.num1,
+							whoperson:_this.number,
+							colonelmonery:_this.mander,
+							membermonery:_this.member,
+							whobegintime:new Date(_this.date),
+							whoendtime:new Date(_this.date1),
+							wholesaleremark:_this.rarea_el
+						},
+						success: res => {
+							console.log("res")
+							console.log(res)
+							if (res.data.msg == 'succeed') {
+								console.log("res")
+								console.log(res)
+							} else if (res.data.msg == 'failure') {
+								uni.showModal({
+									title: '温馨提示',
+									content: '暂无数据',
+									showCancel: false
+								});
+							}
+						}
+					})
+				}
+				_this.payflag = false;
+			},
+			payfunc3(){
+				let _this = this;
+				_this.paywallet();
+				if(_this.payflag){
+					uni.request({
+						url: _this.http + '/ActrvrecouponController/putaddshtorebyactivitycoupon.do',
+						method: 'POST',
+						header: {
+							'content-type': 'application/x-www-form-urlencoded'
+						},
+						data: {
+							coutypeid:_this.valuenum,
+							storeid:uni.getStorageSync('storeid'),
+							couponname:_this.couponname,
+							totalmonerys:_this.totalmonery,
+							magnastart:_this.magnastart,
+							magnanum:_this.magnanum,
+							activitypeid:_this.actypeid,
+							meetmonery:_this.meetmonery,
+							earnings:_this.earnings,
+							couponnumbers:_this.num,
+							coubegintime:new Date(_this.date),
+							couendtime:new Date(_this.date1),
+							seckilltime:new Date(_this.date)
+						},
+						success: res => {
+							console.log("res")
+							console.log(res)
+							if (res.data.msg == 'succeed') {
+								console.log("res")
+								console.log(res)
+							} else if (res.data.msg == 'failure') {
+								uni.showModal({
+									title: '温馨提示',
+									content: '暂无数据',
+									showCancel: false
+								});
+							}
+						}
+					})
+				}
+				_this.payflag = false;
+			},
+			submitfajuan(){
+				let _this = this;
+				
+				if(_this.fajuan.value_el.trim() == '折扣券'){
+					_this.meetmonery = 0
+					_this.earnings = _this.fajuan.current*10
+					_this.actypeid = 1
+					_this.couponname = _this.meetmonery+"折优惠劵"
+				}else if(_this.fajuan.value_el.trim() == '代金券'){
+					_this.meetmonery = 0
+					_this.earnings = _this.fajuan.current*100
+					_this.actypeid = 2
+					_this.couponname = _this.meetmonery+"元代金劵"
+				}else if(_this.fajuan.value_el.trim() == '免单券'){
+					_this.meetmonery = 0
+					_this.earnings = 0
+					_this.actypeid = 5
+				}else if(_this.fajuan.value_el.trim() == '满减券'){
+					_this.meetmonery = _this.fajuan.current1*100
+					_this.earnings = _this.fajuan.current2*100
+					_this.actypeid = 3
+					_this.couponname = "满"+_this.meetmonery +"减"+_this.earnings +"劵"
+				}else if(_this.fajuan.value_el.trim() == '体验券'){
+					_this.meetmonery = 0
+					_this.earnings = 0
+					_this.actypeid = 7
+				}else if(_this.fajuan.value_el.trim() == '试睡券'){
+					_this.meetmonery = 0
+					_this.earnings = 0
+					_this.actypeid = 8
+				}else if(_this.fajuan.value_el.trim() == '半价券'){
+					_this.meetmonery = 0
+					_this.earnings = 0
+					_this.actypeid = 4
+				}else if(_this.fajuan.value_el.trim() == '兑换券'){
+					_this.meetmonery = 0
+					_this.earnings = 0
+					_this.actypeid = 6
+				}
+				if(_this.value.trim()=='秒杀活动'){
+					this.valuenum = 3
+					_this.payfunc3()
+				}else if(_this.value.trim()=='拼团活动'){
+					this.valuenum = 2
+					_this.payfunc2()
+				}else if(_this.value.trim()=='刮刮活动'){
+					this.valuenum = 4
+					_this.payfunc1()
+				}else if(_this.value.trim()=='直接获取'){
+					this.valuenum = 1
+					_this.payfunc1()
+				}
+				
+			},
 			blur(){
 				this.num = parseInt(this.number * this.num1)
 			},
@@ -132,7 +362,7 @@
 						});
 						return
 					}
-					this.paymoney()
+					this.submitfajuan()
 				}
 				if(this.currentIndex == 0){
 					if(this.num == ''){
@@ -144,7 +374,7 @@
 						return
 					}
 					this.verifct()
-					this.paymoney()
+					this.submitfajuan()
 				}
 				if(this.currentIndex == 1){
 					if(this.num == '' || this.num1 == '' || this.number == '' || this.mander == '' || this.member == '' || this.rarea_el == ''){
@@ -156,7 +386,7 @@
 						return
 					}
 					this.verifct()
-					this.paymoney()
+					this.submitfajuan()
 				}
 			},
 			//数据对应
@@ -235,6 +465,11 @@
 				month = month > 9 ? month : '0' + month;;
 				day = day > 9 ? day : '0' + day;
 				return `${year}-${month}-${day}`;
+			},
+			addwallet: function() {
+				uni.navigateTo({
+					url: '../recharge/recharge'
+				})
 			},
 		}
 	}
